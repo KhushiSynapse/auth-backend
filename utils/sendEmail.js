@@ -1,5 +1,5 @@
 const nodemailer=require("nodemailer")
-const {user_email,user_pass} =require("./configure/config")
+const {user_email,user_pass} =require("../configure/config")
 const sendEmail=async(text,to)=>{
 const transporter=nodemailer.createTransport({
     host:"smtp.gmail.com",
