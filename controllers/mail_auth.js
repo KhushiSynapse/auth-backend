@@ -2,7 +2,7 @@ const sendEmail =require("../utils/sendEmail")
 const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const otpstore={}
-
+const { totp } = require('otplib');
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
@@ -72,4 +72,49 @@ const generateOtp=()=>{
     }catch(error){
         return res.status(500).json({message:error.message})
     }
+    }
+
+    exports.verifyUser=async(req,res)=>{
+        try{
+            const{email,password}=req.body
+            if(!email||!password){
+                return res.status(400).json({message:"details are required"})
+            }
+            const hasEmail=await User.findOne({email})
+            if (hasEmail){
+                if(password===hasEmail.password)
+                {
+                    return res.status(200).json({message:"Login successfull"})
+                }
+            }
+            else{
+                res.status(400).json({message:"Register now "})
+            }
+        }
+        catch(error){
+            return res.status(400).json({message:"error in login"})
+        }
+
+    }
+
+
+    exports.verifyUserOtp=async(req,res)=>{
+        try{
+            const{otp,email}=req.body
+            if(!otp){
+                res.status(400).json({message:"Otp is required for authentication"})
+            }
+            else{
+                const user=await User.findOne({email},"secret")
+                const token=totp.generate(user.secret)
+                const isValid=totp.check(otp,token)
+                if(isValid){
+                    return res.status(200).json({message:"You are authenticated successfully"})
+                }
+                 return res.status(400).json({message:"Invalid OTP"})
+            }
+        }
+        catch(error){
+            res.status(400).json({message:error.message})
+        }
     }
