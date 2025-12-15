@@ -1,4 +1,4 @@
-const {PORT} =require("./config")
+const {PORT} =require("./configure/config")
 
 const express = require("express");
 const bodyParser = require("body-parser");
