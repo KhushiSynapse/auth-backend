@@ -1,6 +1,6 @@
 const sendEmail =require("../utils/sendEmail")
 const QRcode=require("../otpgenerate/otpgen")
-const User=require("../utils/Users")
+const User=require("../Schema/User")
 const otpstore={}
 
 const generateOtp=()=>{
