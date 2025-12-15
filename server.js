@@ -10,7 +10,7 @@ const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
