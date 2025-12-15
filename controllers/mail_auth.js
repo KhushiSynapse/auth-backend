@@ -18,13 +18,13 @@ const generateOtp=()=>{
 
         otpstore[email]={otp,expiry}
 
-        try{
-             sendEmail(`Your OTP code is:${otp}`,email)
-            res.json({message:"OTP send to email"})
-        }
-        catch(error){
-            res.status(500).json({message:error.message})
-        }
+        try {
+  await sendEmail(`Your OTP code is: ${otp}`, email); // <- must await
+  res.json({ message: "OTP sent to email" });
+} catch (error) {
+  res.status(500).json({ message: "Failed to send OTP", error: error.message });
+}
+
     }
 
     exports.verifyOtp=async(req,res)=>{
