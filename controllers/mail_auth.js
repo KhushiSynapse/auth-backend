@@ -1,5 +1,5 @@
 const sendEmail =require("../utils/sendEmail")
-const QRcode=require("../otpgenerate/otpgen")
+const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const otpstore={}
 
@@ -64,7 +64,7 @@ const generateOtp=()=>{
         if(existingUser){
            return res.status(400).json({message:"email already registered"})
         }
-           const {secret,qr}=QRcode.main(email)
+           const {secret,qr}=await Otpgen(email)
 
            const newUser= new User({firstname,lastname,email,password,secret})
             await newUser.save()
