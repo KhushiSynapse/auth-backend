@@ -18,7 +18,7 @@ const generateOtp=()=>{
         otpstore[email]={otp,expiry}
 
         try{
-            sendEmail(`Your OTP code is:${otp}`,email)
+            await sendEmail(`Your OTP code is:${otp}`,email)
             res.json({message:"OTP send to email"})
         }
         catch(error){
@@ -36,11 +36,11 @@ const generateOtp=()=>{
 
         const record=otpstore[email]
         if(!record){
-            return res.status(400).josn({message:"No OTp send to this email"})
+            return res.status(400).json({message:"No OTp send to this email"})
         }
         if(Date.now()>record.expiry){
             delete otpstore[email]
-            return res.status(400).josn({message:"OTP expired"})
+            return res.status(400).json({message:"OTP expired"})
 
         }
 
@@ -65,10 +65,10 @@ const generateOtp=()=>{
         }
            const {secret,qr}=QRcode.main(email)
 
-           const newUser= new User(firstname,lastname,email,password,secret)
+           const newUser= new User({firstname,lastname,email,password,secret})
             await newUser.save()
             res.status(201).json({qr,message:"User created successfully!!", user: newUser})
     }catch(error){
-        return res.status(500).json({message:error})
+        return res.status(500).json({message:error.message})
     }
     }
