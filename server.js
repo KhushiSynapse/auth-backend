@@ -1,5 +1,5 @@
 const {PORT} =require("./config")
-const PORT = process.env.PORT
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
