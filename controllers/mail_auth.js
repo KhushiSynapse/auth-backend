@@ -101,23 +101,30 @@ const generateOtp=()=>{
     }
 
 
-    exports.verifyUserOtp=async(req,res)=>{
-        try{
-            const{otp,email}=req.body
-            if(!otp){
-                res.status(400).json({message:"Otp is required for authentication"})
-            }
-            else{
-                const user=await User.findOne({email},"secret")
-                const token=totp.generate(user.secret)
-               
-                if(parseInt(otp)===token){
-                    return res.status(200).json({message:"You are authenticated successfully"})
-                }else{
-                 return res.status(400).json({message:"Invalid OTP"})}
-            }
-        }
-        catch(error){
-            res.status(400).json({message:error.message})
-        }
+    exports.verifyUserOtp = async (req, res) => {
+  try {
+    const { otp, email } = req.body;
+
+    if (!otp) {
+      return res.status(400).json({ message: "OTP is required for authentication" });
     }
+
+    const user = await User.findOne({ email }, "secret");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Use the library's verify method
+    const isValid = totp.check(otp, user.secret);
+
+    if (isValid) {
+      return res.status(200).json({ message: "You are authenticated successfully" });
+    } else {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+    
