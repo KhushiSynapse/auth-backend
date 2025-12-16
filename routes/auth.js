@@ -11,6 +11,6 @@ router.post("/send-details",authController.sendDetails)
 
 router.post("/login-userr",authController.verifyUser)
 
-router.post("/verify-otp",authController.verifyUserOtp)
+router.post("/verify-userotp",authController.verifyUserOtp)
 
 module.exports=router
