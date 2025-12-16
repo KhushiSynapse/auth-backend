@@ -72,7 +72,7 @@ const generateOtp=()=>{
 
            const newUser= new User({firstname,lastname,email,password,secret})
             await newUser.save()
-            res.status(201).json({qr,message:"User created successfully!!", user: newUser})
+            res.status(201).json({qr,message:"User created successfully!!"})
     }catch(error){
         return res.status(500).json({message:error.message})
     }
@@ -119,7 +119,7 @@ const generateOtp=()=>{
     }
 
     // Use the library's verify method
-    const isValid = totp.check(otp, user.secret);
+    const isValid = totp.check(otp, user.secret,{window:1});
     setInterval(()=>{
         console.log(totp.generate(user.secret))
     },30000)
