@@ -1,6 +1,5 @@
 const { authenticator } = require("otplib");
 const QRCode = require("qrcode");
-const fs = require("fs");
 
 async function otpGen(email) {
   const secret = authenticator.generateSecret();
