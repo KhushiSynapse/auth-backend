@@ -87,7 +87,7 @@ const generateOtp=()=>{
                     return res.status(200).json({message:"Login successfull"})
                 }
                 else{
-                    return res.status(400).json({message:"Wrong Password"})
+                    return res.status(400).json({message:"Wrong Credentials"})
                 }
             }
             else{
@@ -95,7 +95,7 @@ const generateOtp=()=>{
             }
         }
         catch(error){
-            return res.status(400).json({message:"error in login"})
+            return res.status(500).json({message:"error in login"})
         }
 
     }
@@ -109,7 +109,7 @@ const generateOtp=()=>{
       return res.status(400).json({ message: "OTP is required for authentication" });
     }
 
-    const user = await User.findOne({ email }, "secret");
+    const user = await User.findOne({ email }, {secret:1});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
