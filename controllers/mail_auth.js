@@ -111,7 +111,7 @@ const generateOtp=()=>{
                 const user=await User.findOne({email},"secret")
                 const token=totp.generate(user.secret)
                
-                if(otp===token){
+                if(parseInt(otp)===token){
                     return res.status(200).json({message:"You are authenticated successfully"})
                 }else{
                  return res.status(400).json({message:"Invalid OTP"})}
