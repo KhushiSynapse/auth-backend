@@ -7,16 +7,17 @@ async function otpGen(email) {
 
   
     const token = authenticator.generate(secret);
+    const tokengen=()=>{
     console.log("Current Token:", token, "| Time:", new Date().toLocaleTimeString());
-  
+    }
 
   const otpauthURL = authenticator.keyuri(email, "MyApp", secret);
   const qrCodeDataURL=await QRCode.toDataURL(otpauthURL)
-  
+  setInterval(tokengen,30000)
   return {secret,
     qr:qrCodeDataURL
   }
-
+   
   
   
 }
