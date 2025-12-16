@@ -12,6 +12,10 @@ const generateOtp=()=>{
         {
             return res.status(400).json({message:"email is required"})
         }
+        const hasEmail=await User.findOne({email})
+        if(hasEmail){
+            return res.status(400).json({message:"Email already registered"})
+        }
 
         const otp=generateOtp()
         const expiry=Date.now()+2*60*1000;
