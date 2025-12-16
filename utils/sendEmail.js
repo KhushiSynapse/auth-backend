@@ -1,11 +1,10 @@
 const { Resend } = require("resend");
-const{USER_EMAIL}=require("../configure/config")
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (text, to) => {
   try {
     const response = await resend.emails.send({
-      from: USER_EMAIL,
+      from: process.env.SENDER_EMAIL,
       to,
       subject: "OTP Verification",
       text: text,
