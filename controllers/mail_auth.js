@@ -86,6 +86,9 @@ const generateOtp=()=>{
                 {
                     return res.status(200).json({message:"Login successfull"})
                 }
+                else{
+                    return res.status(400).json({message:"Wrong Password"})
+                }
             }
             else{
                 res.status(400).json({message:"Register now "})
