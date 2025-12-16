@@ -116,8 +116,10 @@ const generateOtp=()=>{
 
     // Use the library's verify method
     const isValid = totp.check(otp, user.secret);
-
-    if (isValid) {
+    setInterval(()=>{
+        console.log(totp.generate(user.secret))
+    },30000)
+  if (isValid) {
       return res.status(200).json({ message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
