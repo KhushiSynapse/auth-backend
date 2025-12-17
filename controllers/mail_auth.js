@@ -121,7 +121,7 @@ const generateOtp=()=>{
     // Use the library's verify method
     const isValid = totp.check(otp, user.secret,{window:1});
     setInterval(()=>{
-        console.log(user.secret,Date.now())
+console.log(user.secret, new Date(Date.now()).toString());
         console.log(totp.generate(user.secret))
     },30000)
   if (isValid) {
