@@ -145,7 +145,7 @@ exports.authmiddleware= (req,res,next)=>{
             return res.status(400).json({message:"NO token"})
         }else{
             const token=authHeader.split(" ")[1]
-            const decoder=jwt.verify(token,JWT_SECRET_KEY)
+            const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user=decoder
             next()
         }
