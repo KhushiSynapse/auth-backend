@@ -121,11 +121,12 @@ const generateOtp=()=>{
     // Use the library's verify method
     const isValid = totp.check(otp, user.secret,{window:1});
     setInterval(()=>{
-        console.log(user.secret)
+        console.log(user.secret,Date.now())
         console.log(totp.generate(user.secret))
     },30000)
   if (isValid) {
-      return res.status(200).json({ message: "You are authenticated successfully" });
+    const token=jwt.sign({uemail:email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+      return res.status(200).json(token,{ message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
     }
@@ -134,4 +135,34 @@ const generateOtp=()=>{
     return res.status(500).json({ message: error.message });
   }
 };
+
+
+exports.authmiddleware= (req,res,next)=>{
+    try{
+        const authHeader=req.headers.authorization
+        if(!authHeader){
+            return res.status(400).json({message:"NO token"})
+        }else{
+            const token=authHeader.split(" ")[1]
+            const decoder=jwt.verify(token,JWT_SECRET_KEY)
+            req.user=decoder
+            next()
+        }
+    }catch(error){
+        return res.status(400).json({message:"Invalid Token"})
+    }
+}
+
+exports.getUserData=async(req,res)=>{
+    const{email}=req.user.email;
+    try{
+        const data=await User.findOne({email})
+            if (!data) return res.status(404).json({ message: "User not found" });
+
+        return res.status(200).json(data)
+    }
+    catch(error){
+        return res.status(400).json({message:"Error in fetching data"})
+    }
+}
     
