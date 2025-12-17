@@ -155,7 +155,7 @@ exports.authmiddleware= (req,res,next)=>{
 }
 
 exports.getUserData=async(req,res)=>{
-    constemail=req.user.uemail;
+    const email=req.user.uemail;
     try{
         const data=await User.findOne({email})
             if (!data) return res.status(404).json({ message: "User not found" });
