@@ -1,6 +1,7 @@
 const sendEmail =require("../utils/sendEmail")
 const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
+const jwt=require("jsonwebtoken")
 const otpstore={}
 const { totp } = require('otplib');
 const generateOtp=()=>{
