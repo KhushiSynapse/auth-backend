@@ -127,7 +127,7 @@ console.log(user.secret, new Date(Date.now()).toString());
     },30000)
   if (isValid) {
     const token=jwt.sign({uemail:email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
-      return res.status(200).json(token,{ message: "You are authenticated successfully" });
+      return res.status(200).json({token, message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
     }
