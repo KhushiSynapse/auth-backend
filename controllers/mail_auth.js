@@ -3,11 +3,12 @@ const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
 const otpstore={}
-const { totp } = require('otplib');
+const { authenticator } = require("otplib");
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
-    exports.sendOtp=async(req,res)=>{
+    exports.
+    sendOtp=async(req,res)=>{
         const {email}=req.body
         if(!email)
         {
@@ -120,10 +121,10 @@ const generateOtp=()=>{
     }
 
     // Use the library's verify method
-    const isValid = totp.check(otp, user.secret,{window:1});
+    const isValid = authenticator.check(otp, user.secret,{window:1});
     setInterval(()=>{
 console.log(user.secret, new Date(Date.now()).toString());
-        console.log(totp.generate(user.secret))
+        console.log(authenticator.generate(user.secret))
     },30000)
   if (isValid) {
     const token=jwt.sign({uemail:email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
