@@ -77,6 +77,8 @@ const generateOtp=()=>{
         const rounds=12
         const hashedpass=await bcrypt.hash(password,rounds)
            const {secret,qr}=await Otpgen(email)
+           const allRoles = await Permission.find();
+console.log("ALL ROLES:", allRoles);
         const defaultUser=await Permission.findOne({name:"user"})
            const newUser= new User({firstname,lastname,email,password:hashedpass,secret,role:defaultUser._id})
             await newUser.save()
