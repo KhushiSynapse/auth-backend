@@ -3,6 +3,7 @@ const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
+const Permission=require("../Schema/Permisison")
 const otpstore={}
 const { authenticator } = require("otplib");
 const generateOtp=()=>{
@@ -76,8 +77,8 @@ const generateOtp=()=>{
         const rounds=12
         const hashedpass=await bcrypt.hash(password,rounds)
            const {secret,qr}=await Otpgen(email)
-
-           const newUser= new User({firstname,lastname,email,password:hashedpass,secret})
+        const defaultUser=await Permission.findOne({name:"user"})
+           const newUser= new User({firstname,lastname,email,password:hashedpass,secret,role:defaultUser._id})
             await newUser.save()
             res.status(201).json({qr,message:"User created successfully!!"})
     }catch(error){
@@ -133,7 +134,7 @@ console.log(user.secret, new Date(Date.now()).toString());
         console.log(authenticator.generate(user.secret))
     },30000)
   if (isValid) {
-    const token=jwt.sign({uemail:email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+    const token=jwt.sign({uemail:email,urole:role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
       return res.status(200).json({token, message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
