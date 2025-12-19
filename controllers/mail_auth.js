@@ -2,6 +2,7 @@ const sendEmail =require("../utils/sendEmail")
 const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
+const bcrypt=require("bcrypt")
 const otpstore={}
 const { authenticator } = require("otplib");
 const generateOtp=()=>{
@@ -63,6 +64,8 @@ const generateOtp=()=>{
     exports.sendDetails=async(req,res)=>{
         try{
         const{firstname,lastname,email,password}=req.body;
+        
+
         if(!firstname||!lastname||!email){
             return res.status(400).json({message:"details are required"})
         }
@@ -70,9 +73,11 @@ const generateOtp=()=>{
         if(existingUser){
            return res.status(400).json({message:"email already registered"})
         }
+        const rounds=12
+        const hashedpass=await bcrypt.hash(password,rounds)
            const {secret,qr}=await Otpgen(email)
 
-           const newUser= new User({firstname,lastname,email,password,secret})
+           const newUser= new User({firstname,lastname,email,hashedpass,secret})
             await newUser.save()
             res.status(201).json({qr,message:"User created successfully!!"})
     }catch(error){
@@ -86,9 +91,10 @@ const generateOtp=()=>{
             if(!email||!password){
                 return res.status(400).json({message:"details are required"})
             }
-            const hasEmail=await User.findOne({email})
+            const hasEmail=await User.findOne({email}).select("+password")
             if (hasEmail){
-                if(password===hasEmail.password)
+                const validPass=await bcrypt.compare(password,hasEmail.password)
+                if(validPass)
                 {
                     return res.status(200).json({message:"Login successfull"})
                 }
