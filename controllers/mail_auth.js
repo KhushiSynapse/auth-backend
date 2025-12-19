@@ -135,7 +135,7 @@ console.log(user.secret, new Date(Date.now()).toString());
         console.log(authenticator.generate(user.secret))
     },30000)
   if (isValid) {
-    const token=jwt.sign({uemail:email,urole:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+    const token=jwt.sign({uemail:email,roleId:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
       return res.status(200).json({token, message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
@@ -155,7 +155,9 @@ exports.authmiddleware= (req,res,next)=>{
         }else{
             const token=authHeader.split(" ")[1]
             const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
-            req.user=decoder
+            req.user={email:decoder.uemail,
+                roleID:decoder.roleId
+            }
             next()
         }
     }catch(error){

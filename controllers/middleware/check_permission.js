@@ -3,8 +3,8 @@ const User=require("../../Schema/User")
 exports.PermissionCheck=(userPermission)=>{
     return async(req,res,next)=>{
     try{
-        const userId=req.user._id
-       const user= await User.findById(userId).populate({path:"role",populate:{path:"permissions",select:"name"}})
+        const userEmail=req.uemail
+       const user= await User.findOne(userEmail).populate({path:"role",populate:{path:"permissions",select:"name"}})
        const hasPermission=user.role.permissions.some(perm=>perm.name===userPermission)
        if(hasPermission){
         next()
