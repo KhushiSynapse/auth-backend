@@ -1,6 +1,15 @@
 const {PORT} =require("./configure/config")
 const connectDB = require("./configure/db");
+const {AttachPermission}=require("./Seed/AttachPermission")
+const {PermissionSeed}=require("./Seed/PermissionSeed")
+
+async function Seed(){
 connectDB();
+await AttachPermission();
+ await PermissionSeed();
+}
+
+Seed()
 
 const express = require("express");
 const cors = require("cors");
