@@ -5,7 +5,7 @@ async function AttachPermissions(){
     const createUser=await Permission.findOne({name:"create-user"})
     const deleteUser=await Permission.findOne({name:"delete-user"})
     const updateUser=await Permission.findOne({name:"update-user"})
-    const listUsers=await Permission.findOne({name:"list-user"})
+    const listUsers=await Permission.findOne({name:"list-users"})
     const viewProfile=await Permission.findOne({name:"view-profile"})
     const manageRole=await Permission.findOne({name:"manage-roles"})
 
