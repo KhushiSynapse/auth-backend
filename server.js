@@ -1,12 +1,13 @@
 const {PORT} =require("./configure/config")
 const connectDB = require("./configure/db");
-const {AttachPermission}=require("./Seed/AttachPermission")
-const {PermissionSeed}=require("./Seed/PermissionSeed")
+const {AttachPermissions}=require("./Seed/AttachPermission")
+const {SendPermissions}=require("./Seed/PermissionSeed")
 
 async function Seed(){
-connectDB();
-await AttachPermission();
- await PermissionSeed();
+await connectDB();
+
+ await SendPermissions();
+ await AttachPermissions();
 }
 
 Seed()
