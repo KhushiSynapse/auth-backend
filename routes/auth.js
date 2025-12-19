@@ -13,6 +13,6 @@ router.post("/login-userr",authController.verifyUser)
 
 router.post("/verify-userotp",authController.verifyUserOtp)
 
-router.get("/viewprofile",[authController.authmiddleware,permissionController.PermissionCheck],authController.getUserData)
+router.get("/view-profile",[authController.authmiddleware,permissionController.PermissionCheck("view-profile")],authController.getUserData)
 
 module.exports=router
