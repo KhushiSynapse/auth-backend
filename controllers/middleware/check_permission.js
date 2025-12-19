@@ -14,7 +14,7 @@ exports.PermissionCheck=(userPermission)=>{
        }
     }
     catch(error){
-        return res.status(400).json({message:"Error in checking Permissions"})
+        return res.status(400).json({message:error.message})
     }
 }
 }
