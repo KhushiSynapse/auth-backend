@@ -3,7 +3,7 @@ const Otpgen=require("../otpgenerate/otpgen")
 const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
-const Permission=require("../Schema/Permission")
+const Role=require("../Schema/Role")
 const otpstore={}
 const { authenticator } = require("otplib");
 const generateOtp=()=>{
@@ -77,9 +77,8 @@ const generateOtp=()=>{
         const rounds=12
         const hashedpass=await bcrypt.hash(password,rounds)
            const {secret,qr}=await Otpgen(email)
-           const allRoles = await Permission.find();
-console.log("ALL ROLES:", allRoles);
-        const defaultUser=await Permission.findOne({name:"user"})
+         
+        const defaultUser=await Role.findOne({name:"user"})
            const newUser= new User({firstname,lastname,email,password:hashedpass,secret,role:defaultUser._id})
             await newUser.save()
             res.status(201).json({qr,message:"User created successfully!!"})
