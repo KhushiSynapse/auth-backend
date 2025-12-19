@@ -77,7 +77,7 @@ const generateOtp=()=>{
         const hashedpass=await bcrypt.hash(password,rounds)
            const {secret,qr}=await Otpgen(email)
 
-           const newUser= new User({firstname,lastname,email,hashedpass,secret})
+           const newUser= new User({firstname,lastname,email,password:hashedpass,secret})
             await newUser.save()
             res.status(201).json({qr,message:"User created successfully!!"})
     }catch(error){
