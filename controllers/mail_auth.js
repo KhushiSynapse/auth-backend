@@ -196,3 +196,13 @@ catch(error){
     return res.status(401).json({message:"Error in creating User"})
 }
 }    
+
+exports.listUser=async(req,res)=>{
+    try{
+        const list=User.find({},{firstname:1, lastname:1, role:1, email:1,_id:0})
+        return res.status(200).json(list)
+    }
+    catch(error){
+        return res.status(400).json({message:"error in listing"})
+    }
+}

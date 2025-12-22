@@ -16,4 +16,8 @@ router.post("/verify-userotp",authController.verifyUserOtp)
 router.get("/view-profile",[authController.authmiddleware,permissionController.PermissionCheck("view-profile")],authController.getUserData)
 
 router.post("/create-user",[authController.authmiddleware,permissionController.PermissionCheck("create-user")],authController.createUser)
+
+router.post("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
+
+
 module.exports=router
