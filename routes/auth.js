@@ -17,7 +17,7 @@ router.get("/view-profile",[authController.authmiddleware,permissionController.P
 
 router.post("/create-user",[authController.authmiddleware,permissionController.PermissionCheck("create-user")],authController.createUser)
 
-router.post("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
+router.get("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
 
 
 module.exports=router
