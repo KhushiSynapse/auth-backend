@@ -193,7 +193,8 @@ exports.createUser=async(req,res)=>{
 const hashedPassword = await bcrypt.hash(password, 12);
 
  const defaultUser=await Role.findOne({name:"user"})
-   const newuser= new User({firstname,lastname,email,password:hashedPassword,role:defaultUser._id})
+ const {secret}=await Otpgen(email)
+   const newuser= new User({firstname,lastname,email,password:hashedPassword,role:defaultUser._id,secret})
    await newuser.save()
 
     return res.status(200).json({message:"User created succesfully"})
