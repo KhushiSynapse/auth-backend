@@ -180,15 +180,20 @@ exports.getUserData=async(req,res)=>{
 
 exports.createUser=async(req,res)=>{
     try{
-    const {Firstname,Lastname,Email,Password}=req.body;
-    if(!Firstname||!Lastname||!Email||!Password){
+    const {firstname,lastname,email,password}=req.body;
+    if(!firstname||!lastname||!email||!password){
         return res.status(400).json({message:"Details are required to create a user"})
     }
-    const hasOne=await User.findOne({email:Email})
+    const hasOne=await User.findOne({email})
     if(hasOne){
         return res.status(400).json({message:"User already existed"})
     }
-    await User.create({firstname:Firstname,lastname:Lastname,email:Email,password:Password})
+    const bcrypt = require("bcrypt");
+
+const hashedPassword = await bcrypt.hash(password, 12);
+
+
+    await User.create({firstname,lastname,email,password:hashedPassword})
     return res.status(200).json({message:"User created succesfully"
     })
 }
