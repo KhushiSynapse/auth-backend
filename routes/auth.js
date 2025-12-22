@@ -19,5 +19,7 @@ router.post("/create-user",[authController.authmiddleware,permissionController.P
 
 router.get("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
 
+router.delete("/delete-user/:id",[authController.authmiddleware,permissionController.PermissionCheck("delete-user")],authController.deleteUser)
+
 
 module.exports=router
