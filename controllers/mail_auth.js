@@ -199,7 +199,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
     return res.status(200).json({message:"User created succesfully"})
 }
 catch(error){
-    return res.status(401).json({message:"Error in creating User"})
+    return res.status(401).json({message:error.message})
 }
 }    
 
