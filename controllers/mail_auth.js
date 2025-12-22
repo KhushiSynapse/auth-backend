@@ -216,7 +216,7 @@ exports.listUser=async(req,res)=>{
 
 exports.deleteUser=async(req,res)=>{
     try{
-        const userId=req.params._id
+        const userId=req.params.id
         await User.findByIdAndDelete(userId)
         return res.status(200).json({message:"User deleted"})
     }
