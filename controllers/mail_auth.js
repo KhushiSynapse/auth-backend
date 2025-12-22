@@ -188,14 +188,13 @@ exports.createUser=async(req,res)=>{
     if(hasOne){
         return res.status(400).json({message:"User already existed"})
     }
-    const bcrypt = require("bcrypt");
+   
 
 const hashedPassword = await bcrypt.hash(password, 12);
 
 
     await User.create({firstname,lastname,email,password:hashedPassword})
-    return res.status(200).json({message:"User created succesfully"
-    })
+    return res.status(200).json({message:"User created succesfully"})
 }
 catch(error){
     return res.status(401).json({message:"Error in creating User"})
