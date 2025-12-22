@@ -177,4 +177,22 @@ exports.getUserData=async(req,res)=>{
         return res.status(400).json({message:"Error in fetching data"})
     }
 }
-    
+
+exports.createUser=async(req,res)=>{
+    try{
+    const {Firstname,Lastname,Email,Password}=req.body;
+    if(!Firstname||!Lastname||!Email||!Password){
+        return res.status(400).json({message:"Details are required to create a user"})
+    }
+    const hasOne=await User.findOne({email:Email})
+    if(hasOne){
+        return res.status(400).json({message:"User already existed"})
+    }
+    await User.create({firstname:Firstname,lastname:Lastname,email:Email,password:Password})
+    return res.status(200).json({message:"User created succesfully"
+    })
+}
+catch(error){
+    return res.status(401).json({message:"Error in creating User"})
+}
+}    
