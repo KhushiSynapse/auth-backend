@@ -123,7 +123,7 @@ const generateOtp=()=>{
       return res.status(400).json({ message: "OTP is required for authentication" });
     }
 
-    const user = await User.findOne({ email }, {secret:1},{role:1});
+    const user = await User.findOne({ email }, {secret:1 , role:1});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -135,7 +135,7 @@ console.log(user.secret, new Date(Date.now()).toString());
         console.log(authenticator.generate(user.secret))
     },30000)
   if (isValid) {
-    const token=jwt.sign({uemail:email,roleId:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+    const token=jwt.sign({email,roleId:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
       return res.status(200).json({token, message: "You are authenticated successfully" });
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
@@ -155,7 +155,7 @@ exports.authmiddleware= (req,res,next)=>{
         }else{
             const token=authHeader.split(" ")[1]
             const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
-            req.user={email:decoder.uemail,
+            req.user={email:decoder.email,
                 roleID:decoder.roleId
             }
             next()
@@ -166,7 +166,7 @@ exports.authmiddleware= (req,res,next)=>{
 }
 
 exports.getUserData=async(req,res)=>{
-    const email=req.user.uemail;
+    const email=req.user.email;
     try{
         const data=await User.findOne({email})
             if (!data) return res.status(404).json({ message: "User not found" });
