@@ -199,7 +199,7 @@ catch(error){
 
 exports.listUser=async(req,res)=>{
     try{
-        const list= await User.find({},{firstname:1, lastname:1, role:1, email:1,_id:0})
+        const list= await User.find({},{firstname:1, lastname:1, role:1, email:1,_id:0}).populate({path:"role",select:"name"})
         return res.status(200).json(list)
     }
     catch(error){
