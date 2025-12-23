@@ -124,7 +124,12 @@ const generateOtp=()=>{
     }
     
 
-    const user = await User.findOne({ email }).select("secret role").populate({path:"role",select:"name"});
+const user = await User.findOne({ email })
+  .select("+secret role")
+  .populate({ path: "role", select: "name" });
+
+console.log("USER:", user);
+console.log("ROLE:", user.role);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
