@@ -132,7 +132,8 @@ const generateOtp=()=>{
     const isValid = authenticator.check(otp, user.secret,{window:1});
    
   if (isValid) {
-    req.user={uemail:email}
+    req.user={email}
+
     next()
     } else {
       return res.status(400).json({ message: "Invalid OTP" });

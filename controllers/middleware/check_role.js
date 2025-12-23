@@ -2,7 +2,7 @@ const User=require("../../Schema/User")
 const jwt=require("jsonwebtoken")
 exports.getUserRole=async(req,res)=>{
     try{
-        const email=req.user.uemail
+        const email=req.user.email
         const user=await User.findOne({email}).populate({path:"role",select:"name"})
           if(user){
             const token=jwt.sign({email,rolename:user.role.name},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
