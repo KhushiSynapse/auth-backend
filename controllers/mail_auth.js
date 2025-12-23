@@ -115,15 +115,16 @@ const generateOtp=()=>{
     }
 
 
-    exports.verifyUserOtp = async (req, res,next) => {
+    exports.verifyUserOtp = async (req, res) => {
   try {
     const { otp, email } = req.body;
 
     if (!otp) {
       return res.status(400).json({ message: "OTP is required for authentication" });
     }
+    
 
-    const user = await User.findOne({ email }, {secret:1 , role:1});
+    const user = await User.findOne({ email }, {secret:1 , role:1}).populate({path:"role",select:"name"});
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -132,9 +133,9 @@ const generateOtp=()=>{
     const isValid = authenticator.check(otp, user.secret,{window:1});
    
   if (isValid) {
-    req.user={email}
-
-    next()
+      const token=jwt.sign({email,rolename:user.role.name},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+       return res.status(200).json({token})
+    
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
     }
