@@ -115,7 +115,7 @@ const generateOtp=()=>{
     }
 
 
-    exports.verifyUserOtp = async (req, res) => {
+    exports.verifyUserOtp = async (req, res,next) => {
   try {
     const { otp, email } = req.body;
 
@@ -128,15 +128,12 @@ const generateOtp=()=>{
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Use the library's verify method
+    
     const isValid = authenticator.check(otp, user.secret,{window:1});
-    setInterval(()=>{
-console.log(user.secret, new Date(Date.now()).toString());
-        console.log(authenticator.generate(user.secret))
-    },30000)
+   
   if (isValid) {
-    const token=jwt.sign({email,roleId:user.role},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
-      return res.status(200).json({token, message: "You are authenticated successfully" });
+    req.user={uemail:email}
+    next()
     } else {
       return res.status(400).json({ message: "Invalid OTP" });
     }
