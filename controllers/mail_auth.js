@@ -126,10 +126,6 @@ const generateOtp=()=>{
 
 const user = await User.findOne({ email })
   .select("+secret role")
-  .populate({ path: "role", select: "name" });
-
-console.log("USER:", user);
-console.log("ROLE:", user.role);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -138,7 +134,7 @@ console.log("ROLE:", user.role);
     const isValid = authenticator.check(otp, user.secret,{window:1});
    
   if (isValid) {
-      const token=jwt.sign({email,rolename:user.role.name},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+      const token=jwt.sign({email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
        return res.status(200).json({token})
     
     } else {
