@@ -21,5 +21,8 @@ router.get("/list-users",[authController.authmiddleware,permissionController.Per
 
 router.delete("/delete-user/:id",[authController.authmiddleware,permissionController.PermissionCheck("delete-user")],authController.deleteUser)
 
+router.get("/new-users",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.newUser)
+
+router.post("/assign-role",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
 
 module.exports=router

@@ -225,3 +225,30 @@ exports.deleteUser=async(req,res)=>{
         return res.status(400).json({message:error.message})
     }
 }
+
+
+exports.newUser=async(req,res)=>{
+    try{
+        const users=await User.find({status:false})
+        return res.status(200).json(users)
+    }
+    catch(error){
+        return res.status(400).json({message:error.message})
+    }
+}
+
+exports.assignRole=async(req,res)=>{
+    try{
+        const rolename=req.query.role
+        const roleId=await Role.findOne({rolename})
+        const id=req.query.uid
+        const result=await User.updateOne({_id:id},{$set:{role:roleId._id}})
+        if(result.modifiedCount===1){
+             return res.status(200).json({message:"Role updated"})
+        }
+        else{return res.status(400).json({message:"error in assigning role"})}
+    }
+    catch(error){
+        return res.status(400).json({message:error.message})
+    }
+}
