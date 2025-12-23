@@ -23,6 +23,6 @@ router.delete("/delete-user/:id",[authController.authmiddleware,permissionContro
 
 router.get("/new-users",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.newUser)
 
-router.post("/assign-role",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
+router.post("/assign-role/:role/:id",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
 
 module.exports=router

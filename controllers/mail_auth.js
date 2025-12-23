@@ -239,9 +239,9 @@ exports.newUser=async(req,res)=>{
 
 exports.assignRole=async(req,res)=>{
     try{
-        const rolename=req.query.role
+        const rolename=req.params.role
         const roleId=await Role.findOne({rolename})
-        const id=req.query.uid
+        const id=req.params.id
         const result=await User.updateOne({_id:id},{$set:{role:roleId._id}})
         if(result.modifiedCount===1){
              return res.status(200).json({message:"Role updated"})
