@@ -152,7 +152,10 @@ exports.authmiddleware= (req,res,next)=>{
         const authHeader=req.headers.authorization
         if(!authHeader){
             return res.status(400).json({message:"NO token"})
-        }else{
+        }
+        if (!authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Malformed token" })
+    }else{
             const token=authHeader.split(" ")[1]
             const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user={email:decoder.email,
