@@ -254,7 +254,7 @@ exports.assignRole=async(req,res)=>{
 }
 
 exports.changePass=async(req,res)=>{
-    const {oldpassword,newpassword}=req.body
+    const {oldPassword,newPassword}=req.body
     try{
         const authHeader=req.headers.authorization
         if(!authHeader){
@@ -264,10 +264,10 @@ exports.changePass=async(req,res)=>{
         const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
         const email=decoder.email
         
-        const password=await User.findOne({email}).select("+password")
-        const isSame= bcrypt.compare(oldpassword,password)
+        const user=await User.findOne({email}).select("+password")
+        const isSame= await bcrypt.compare(oldPassword,user.password)
         if(isSame){
-            const hashednewPass=bcrypt.hash(newpassword,12)
+            const hashednewPass=bcrypt.hash(newPassword,12)
         const result=await User.updateOne({email},{$set:{password:hashednewPass}})
         if(result.modifiedCount===1){
             return res.status(200).json({message:"password changed"})
@@ -279,6 +279,6 @@ exports.changePass=async(req,res)=>{
     }
 }
 catch(error){
-    return res.json(400).json({message:error.message})
+    return res.status(400).json({message:error.message})
 }
 }
