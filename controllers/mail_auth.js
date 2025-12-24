@@ -267,7 +267,7 @@ exports.changePass=async(req,res)=>{
         const user=await User.findOne({email}).select("+password")
         const isSame= await bcrypt.compare(oldPassword,user.password)
         if(isSame){
-            const hashednewPass=bcrypt.hash(newPassword,12)
+            const hashednewPass= await bcrypt.hash(newPassword,12)
         const result=await User.updateOne({email},{$set:{password:hashednewPass}})
         if(result.modifiedCount===1){
             return res.status(200).json({message:"password changed"})
