@@ -25,4 +25,7 @@ router.get("/new-users",[authController.authmiddleware,permissionController.Perm
 
 router.post("/assign-role/:role/:id",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
 
+router.post("/change-password",authController.authmiddleware,authController.changePass)
+
+
 module.exports=router

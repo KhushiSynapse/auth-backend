@@ -134,7 +134,7 @@ const user = await User.findOne({ email })
     const isValid = authenticator.check(otp, user.secret,{window:1});
    
   if (isValid) {
-      const token=jwt.sign({email},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+      const token=jwt.sign({email,},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
        return res.status(200).json({token})
     
     } else {
@@ -251,4 +251,34 @@ exports.assignRole=async(req,res)=>{
     catch(error){
         return res.status(400).json({message:error.message})
     }
+}
+
+exports.changePass=async(req,res)=>{
+    const {oldpassword,newpassword}=req.body
+    try{
+        const authHeader=req.headers.authorization
+        if(!authHeader){
+         return res.status(403).json("Unauthorized")
+        }
+        const token=authHeader.split(" ")[1]
+        const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
+        const email=decoder.email
+        
+        const password=await User.findOne({email}).select("+password")
+        const isSame= bcrypt.compare(oldpassword,password)
+        if(isSame){
+            const hashednewPass=bcrypt.hash(newpassword,12)
+        const result=await User.updateOne({email},{$set:{password:hashednewPass}})
+        if(result.modifiedCount===1){
+            return res.status(200).json({message:"password changed"})
+        }
+        else{return res.status(400).json({message:"error in password change"})}
+    }
+    else{
+        return res.status(400).json({message:"Old password mismatch"})
+    }
+}
+catch(error){
+    return res.json(400).json({message:error.message})
+}
 }
