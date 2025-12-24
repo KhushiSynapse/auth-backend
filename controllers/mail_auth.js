@@ -233,7 +233,7 @@ exports.deleteUser=async(req,res)=>{
 
 exports.newUser=async(req,res)=>{
     try{
-        const users=await User.find({status:false})
+        const users=await User.find({status:false}).populate({path:"role",select:"name"})
         return res.status(200).json(users)
     }
     catch(error){
