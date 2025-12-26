@@ -1,5 +1,5 @@
 
 exports.checkLanguage=async(req,res,next)=>{
-    req.lang=req.headers["accept-language"]?.split(",")[0]||"en"
+    req.lang=req.headers["Accept-Language"]||"en"
     next()
 }
