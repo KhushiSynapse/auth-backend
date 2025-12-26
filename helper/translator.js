@@ -6,7 +6,7 @@ const sp=require("../locale/sp.json")
 const translations={en,sp,fr,ar}
 
 function t(key,lang="en"){
-    return translations[lang]?.key||translations.en[key]
+    return translations[lang]?.[key]||translations.en[key]
 }
 
 module.exports=t
