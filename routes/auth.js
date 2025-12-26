@@ -14,9 +14,9 @@ router.post("/login-userr",authController.verifyUser)
 
 router.post("/verify-userotp",authController.verifyUserOtp)
 
-router.get("/view-profile",[authController.authmiddleware,permissionController.PermissionCheck("view-profile"),langController.checkLanguage],authController.getUserData)
+router.get("/view-profile",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("view-profile"),langController.checkLanguage],authController.getUserData)
 
-router.post("/create-user",[authController.authmiddleware,permissionController.PermissionCheck("create-user"),langController.checkLanguage],authController.createUser)
+router.post("/create-user",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("create-user")],authController.createUser)
 
 router.get("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
 
