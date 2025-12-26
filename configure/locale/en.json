@@ -1,0 +1,23 @@
+{
+    "emailisrequired":" email is required",
+    "Emailalreadyregistered":"Email already registerd",
+    "OTPsenttoemail":"OTP sent to email",
+    "NOtoken":"NO token",
+    "Notokenfound":"No token found",
+    "InvalidToken":"Invalid Token",
+    "Usernotfound":"User not found",
+    "Errorinfetchingdata":"Error in fetching data",
+    "Detailsarerequiredtocreateauser":"Details are required to create a user",
+    "Useralreadyexisted":"User already existed",
+    "Usercreatedsuccesfully":"User created succesfully",
+    "errorinlisting":"error in listing",
+    "Userdeleted":"User deleted",
+    "Roleupdated":"Role updated",
+    "errorinassigningrole":"error in assigning role",
+    "Unauthorized":"Unauthorized",
+    "passwordchanged":"password changed",
+    "errorinpasswordchange":"error in password change",
+    "Oldpasswordmismatch":"Old password mismatch"
+
+
+}

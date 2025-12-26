@@ -1,0 +1,21 @@
+{
+    "emailisrequired": "El correo electrónico es obligatorio",
+    "Emailalreadyregistered": "El correo electrónico ya está registrado",
+    "OTPsenttoemail": "OTP enviado al correo electrónico",
+    "NOtoken": "No hay token",
+    "Notokenfound": "No se encontró el token",
+    "InvalidToken": "Token inválido",
+    "Usernotfound": "Usuario no encontrado",
+    "Errorinfetchingdata": "Error al obtener los datos",
+    "Detailsarerequiredtocreateauser": "Se requieren detalles para crear un usuario",
+    "Useralreadyexisted": "El usuario ya existe",
+    "Usercreatedsuccesfully": "Usuario creado exitosamente",
+    "errorinlisting": "Error al listar",
+    "Userdeleted": "Usuario eliminado",
+    "Roleupdated": "Rol actualizado",
+    "errorinassigningrole": "Error al asignar el rol",
+    "Unauthorized": "No autorizado",
+    "passwordchanged": "Contraseña cambiada",
+    "errorinpasswordchange": "Error al cambiar la contraseña",
+    "Oldpasswordmismatch": "La contraseña antigua no coincide"
+}

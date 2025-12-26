@@ -4,6 +4,7 @@ const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
 const Role=require("../Schema/Role")
+const t=require("../../helper/translator")
 const otpstore={}
 const { authenticator } = require("otplib");
 const generateOtp=()=>{
@@ -173,12 +174,12 @@ exports.getUserData=async(req,res)=>{
     const email=req.user.email;
     try{
         const data=await User.findOne({email})
-            if (!data) return res.status(404).json({ message: "User not found" });
+            if (!data) return res.status(404).json({ message:t("Usernotfound",req.lang) });
 
         return res.status(200).json(data)
     }
     catch(error){
-        return res.status(400).json({message:"Error in fetching data"})
+        return res.status(400).json({message:t("Errorinfetchingdata",req.lang)})
     }
 }
 
@@ -286,3 +287,5 @@ catch(error){
     return res.status(400).json({message:error.message})
 }
 }
+
+

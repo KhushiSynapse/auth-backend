@@ -1,0 +1,21 @@
+{
+    "emailisrequired": "البريد الإلكتروني مطلوب",
+    "Emailalreadyregistered": "البريد الإلكتروني مسجل بالفعل",
+    "OTPsenttoemail": "تم إرسال رمز التحقق إلى البريد الإلكتروني",
+    "NOtoken": "لا يوجد رمز",
+    "Notokenfound": "لم يتم العثور على الرمز",
+    "InvalidToken": "رمز غير صالح",
+    "Usernotfound": "المستخدم غير موجود",
+    "Errorinfetchingdata": "خطأ في جلب البيانات",
+    "Detailsarerequiredtocreateauser": "التفاصيل مطلوبة لإنشاء مستخدم",
+    "Useralreadyexisted": "المستخدم موجود بالفعل",
+    "Usercreatedsuccesfully": "تم إنشاء المستخدم بنجاح",
+    "errorinlisting": "خطأ في عرض القائمة",
+    "Userdeleted": "تم حذف المستخدم",
+    "Roleupdated": "تم تحديث الدور",
+    "errorinassigningrole": "خطأ في تعيين الدور",
+    "Unauthorized": "غير مصرح",
+    "passwordchanged": "تم تغيير كلمة المرور",
+    "errorinpasswordchange": "خطأ في تغيير كلمة المرور",
+    "Oldpasswordmismatch": "كلمة المرور القديمة غير متطابقة"
+}
