@@ -18,15 +18,15 @@ router.get("/view-profile",[langController.checkLanguage,authController.authmidd
 
 router.post("/create-user",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("create-user")],authController.createUser)
 
-router.get("/list-users",[authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
+router.get("/list-users",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("list-users")],authController.listUser)
 
-router.delete("/delete-user/:id",[authController.authmiddleware,permissionController.PermissionCheck("delete-user")],authController.deleteUser)
+router.delete("/delete-user/:id",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("delete-user")],authController.deleteUser)
 
-router.get("/new-users",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.newUser)
+router.get("/new-users",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.newUser)
 
-router.post("/assign-role/:role/:id",[authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
+router.post("/assign-role/:role/:id",[langController.checkLanguage,authController.authmiddleware,permissionController.PermissionCheck("manage-roles")],authController.assignRole)
 
-router.post("/change-password",authController.authmiddleware,authController.changePass)
+router.post("/change-password",[langController.checkLanguage,authController.authmiddleware],authController.changePass)
 
 
 module.exports=router

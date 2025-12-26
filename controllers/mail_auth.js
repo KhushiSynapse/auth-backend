@@ -152,12 +152,12 @@ exports.authmiddleware= (req,res,next)=>{
     try{
         const authHeader=req.headers.authorization
         if(!authHeader){
-            return res.status(400).json({message:"NO token"})
+            return res.status(400).json({message:t("NOtoken",req.lang)})
         }
        else{
             const token=authHeader.split(" ")[1]
             if(token==="null"){
-                return res.status(401).json({message:"No token found"})
+                return res.status(401).json({message:t("Notokenfound",req.lang)})
             }
             const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user={email:decoder.email,
@@ -166,7 +166,7 @@ exports.authmiddleware= (req,res,next)=>{
             next()
         }
     }catch(error){
-        return res.status(400).json({message:"Invalid Token"})
+        return res.status(400).json({message:t("Invalid Token",req.lang)})
     }
 }
 
@@ -202,7 +202,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
    const newuser= new User({firstname,lastname,email,password:hashedPassword,role:defaultUser._id,secret})
    await newuser.save()
 
-    return res.status(200).json({message:"User created succesfully"})
+    return res.status(200).json({message:t("Usercreatedsuccesfully",req.lang)})
 }
 catch(error){
     return res.status(401).json({message:error.message})
@@ -215,7 +215,7 @@ exports.listUser=async(req,res)=>{
         return res.status(200).json(list)
     }
     catch(error){
-        return res.status(400).json({message:"error in listing"})
+        return res.status(400).json({message:t("errorinlisting",req.lang)})
     }
 }
 
@@ -224,7 +224,7 @@ exports.deleteUser=async(req,res)=>{
     try{
         const userId=req.params.id
         await User.findByIdAndDelete(userId)
-        return res.status(200).json({message:"User deleted"})
+        return res.status(200).json({message:t("Userdeleted",req.lang)})
     }
     catch(error){
         return res.status(400).json({message:error.message})
@@ -249,9 +249,9 @@ exports.assignRole=async(req,res)=>{
         const id=req.params.id
         const result=await User.updateOne({_id:id},{$set:{role:roleId._id,status:true}})
         if(result.modifiedCount===1){
-             return res.status(200).json({message:"Role updated"})
+             return res.status(200).json({message:t("Roleupdated",req.lang)})
         }
-        else{return res.status(400).json({message:"error in assigning role"})}
+        else{return res.status(400).json({message:t("errorinassigningrole",req.lang)})}
     }
     catch(error){
         return res.status(400).json({message:error.message})
@@ -263,7 +263,7 @@ exports.changePass=async(req,res)=>{
     try{
         const authHeader=req.headers.authorization
         if(!authHeader){
-         return res.status(403).json("Unauthorized")
+         return res.status(403).json({message:t("Unauthorized",req.lang)})
         }
         const token=authHeader.split(" ")[1]
         const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
@@ -275,12 +275,12 @@ exports.changePass=async(req,res)=>{
             const hashednewPass= await bcrypt.hash(newPassword,12)
         const result=await User.updateOne({email},{$set:{password:hashednewPass}})
         if(result.modifiedCount===1){
-            return res.status(200).json({message:"password changed"})
+            return res.status(200).json({message:t("passwordchanged",req.lang)})
         }
-        else{return res.status(400).json({message:"error in password change"})}
+        else{return res.status(400).json({message:t("errorinpasswordchange",req.lang)})}
     }
     else{
-        return res.status(400).json({message:"Old password mismatch"})
+        return res.status(400).json({message:t("Oldpasswordmismatch",req.lang)})
     }
 }
 catch(error){
