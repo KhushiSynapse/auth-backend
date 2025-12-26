@@ -17,5 +17,6 @@
     "Unauthorized": "Non autorisé",
     "passwordchanged": "Mot de passe modifié",
     "errorinpasswordchange": "Erreur lors du changement de mot de passe",
-    "Oldpasswordmismatch": "L'ancien mot de passe ne correspond pas"
+    "Oldpasswordmismatch": "L'ancien mot de passe ne correspond pas",
+    "PermissionDenied":"Permission refusée"
 }

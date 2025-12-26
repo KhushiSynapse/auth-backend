@@ -17,5 +17,6 @@
     "Unauthorized": "No autorizado",
     "passwordchanged": "Contraseña cambiada",
     "errorinpasswordchange": "Error al cambiar la contraseña",
-    "Oldpasswordmismatch": "La contraseña antigua no coincide"
+    "Oldpasswordmismatch": "La contraseña antigua no coincide",
+    "PermissionDenied":"Permiso denegado"
 }

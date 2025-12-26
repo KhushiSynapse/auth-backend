@@ -1,5 +1,5 @@
 const User=require("../../Schema/User")
-
+const t=require("../../helper/translator")
 exports.PermissionCheck=(userPermission)=>{
     return async(req,res,next)=>{
     try{
@@ -10,7 +10,7 @@ exports.PermissionCheck=(userPermission)=>{
         next()
        }
        else{
-        return res.status(403).json({message:"Permission Denied"})
+        return res.status(403).json({message:t("PermissionDenied",req.lang)})
        }
     }
     catch(error){

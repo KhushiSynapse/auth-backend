@@ -17,7 +17,8 @@
     "Unauthorized":"Unauthorized",
     "passwordchanged":"password changed",
     "errorinpasswordchange":"error in password change",
-    "Oldpasswordmismatch":"Old password mismatch"
+    "Oldpasswordmismatch":"Old password mismatch",
+    "PermissionDenied":"Permission Denied"
 
 
 }

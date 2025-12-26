@@ -17,5 +17,7 @@
     "Unauthorized": "غير مصرح",
     "passwordchanged": "تم تغيير كلمة المرور",
     "errorinpasswordchange": "خطأ في تغيير كلمة المرور",
-    "Oldpasswordmismatch": "كلمة المرور القديمة غير متطابقة"
+    "Oldpasswordmismatch": "كلمة المرور القديمة غير متطابقة",
+    "PermissionDenied":"تم رفض الإذن"
+
 }
