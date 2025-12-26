@@ -18,5 +18,6 @@
     "passwordchanged": "Contraseña cambiada",
     "errorinpasswordchange": "Error al cambiar la contraseña",
     "Oldpasswordmismatch": "La contraseña antigua no coincide",
-    "PermissionDenied":"Permiso denegado"
+    "PermissionDenied":"Permiso denegado",
+    "Your OTP code is:":"Su código OTP es:"
 }

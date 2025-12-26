@@ -18,6 +18,7 @@
     "passwordchanged": "تم تغيير كلمة المرور",
     "errorinpasswordchange": "خطأ في تغيير كلمة المرور",
     "Oldpasswordmismatch": "كلمة المرور القديمة غير متطابقة",
-    "PermissionDenied":"تم رفض الإذن"
+    "PermissionDenied":"تم رفض الإذن",
+    "Your OTP code is:":"رمز التحقق الخاص بك هو:"
 
 }

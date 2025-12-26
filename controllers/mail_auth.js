@@ -28,8 +28,9 @@ const generateOtp=()=>{
         otpstore[email]={otp,expiry}
 
         try {
-  await sendEmail(`Your OTP code is: ${otp}`, email); // <- must await
-  res.json({ message: "OTP sent to email" });
+            const msg=t("YourOTPcodeis:",req.lang)
+  await sendEmail( `${msg} ${otp}`, email); // <- must await
+  res.json({ message: t("OTPsenttoemail",req.lang) });
 } catch (error) {
   res.status(500).json({ message: "Failed to send OTP", error: error.message });
 }

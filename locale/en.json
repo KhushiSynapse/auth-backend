@@ -18,7 +18,8 @@
     "passwordchanged":"password changed",
     "errorinpasswordchange":"error in password change",
     "Oldpasswordmismatch":"Old password mismatch",
-    "PermissionDenied":"Permission Denied"
+    "PermissionDenied":"Permission Denied",
+    "YourOTPcodeis:":"Your OTP code is:"
 
 
 }

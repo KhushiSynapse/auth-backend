@@ -18,5 +18,6 @@
     "passwordchanged": "Mot de passe modifié",
     "errorinpasswordchange": "Erreur lors du changement de mot de passe",
     "Oldpasswordmismatch": "L'ancien mot de passe ne correspond pas",
-    "PermissionDenied":"Permission refusée"
+    "PermissionDenied":"Permission refusée",
+    "Your OTP code is:":"Votre code OTP est :"
 }
