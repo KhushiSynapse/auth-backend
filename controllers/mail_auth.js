@@ -4,7 +4,7 @@ const User=require("../Schema/User")
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcrypt")
 const Role=require("../Schema/Role")
-const t=require("../../helper/translator")
+const t=require("../helper/translator")
 const otpstore={}
 const { authenticator } = require("otplib");
 const generateOtp=()=>{
