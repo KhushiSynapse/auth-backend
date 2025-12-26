@@ -187,11 +187,11 @@ exports.createUser=async(req,res)=>{
     try{
     const {firstname,lastname,email,password}=req.body;
     if(!firstname||!lastname||!email||!password){
-        return res.status(400).json({message:"Details are required to create a user"})
+        return res.status(400).json({message:t("Detailsarerequiredtocreateauser",req.lang)})
     }
     const hasOne=await User.findOne({email})
     if(hasOne){
-        return res.status(400).json({message:"User already existed"})
+        return res.status(400).json({message:t("Useralreadyexisted",req.lang)})
     }
    
 
