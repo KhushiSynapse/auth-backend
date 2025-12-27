@@ -293,7 +293,7 @@ catch(error){
 
 
 exports.addProduct=async(req,res)=>{
-    const {name,price,description,category}=req.body
+    const {name,price,desc,category}=req.body
     
 
     try{
