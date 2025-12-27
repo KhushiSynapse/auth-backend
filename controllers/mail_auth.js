@@ -313,9 +313,9 @@ exports.addProduct=async(req,res)=>{
     stream.end(fileBuffer)
 })
     }
-     const imageURL=result.secure_url
+     
     const result=await uploadToCloudinary(req.file.buffer)
-    
+    const imageURL=result.secure_url
         const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL})
         if(isAdd){
             return res.status(200).json({message:"Product added successfully"})
