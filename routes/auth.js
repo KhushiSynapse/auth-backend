@@ -4,7 +4,7 @@ const router=express.Router()
 const authController=require("../controllers/mail_auth.js")
 const permissionController=require("../controllers/middleware/check_permission.js")
 const langController=require("../controllers/middleware/check_language.js")
-const upload=require("../server.js")
+const upload=require("./middleware/upload_image.js")
 router.post("/send-otp",authController.sendOtp)
 
 router.post("/verify-otp",authController.verifyOtp)
