@@ -294,8 +294,8 @@ catch(error){
 
 exports.addProduct=async(req,res)=>{
     const {name,price,description,category}=req.body
-    const imageURL=result.secure_url
-    if(!imageURL){
+   const image=req.file
+    if(image){
         return res.status(400).json({message:"No image added"})
     }
 
@@ -313,6 +313,7 @@ exports.addProduct=async(req,res)=>{
     stream.end(fileBuffer)
 })
     }
+     const imageURL=result.secure_url
     const result=await uploadToCloudinary(req.file.buffer)
     
         const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL})
