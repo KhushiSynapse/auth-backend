@@ -329,3 +329,13 @@ exports.addProduct=async(req,res)=>{
     }
 }
 
+exports.getProducts=async(req,res)=>{
+    try{
+        const data=await Product.find()
+        return res.status(201).json(data)
+    }
+    catch(error){
+        return res.status(400).json({message:error.message})
+    }
+}
+
