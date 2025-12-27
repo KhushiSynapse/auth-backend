@@ -294,8 +294,8 @@ catch(error){
 
 exports.addProduct=async(req,res)=>{
     const {name,price,description,category}=req.body
-   const image=req.file.buffer
-    if(image){
+   const image=req.file
+    if(!image){
         return res.status(400).json({message:"No image added"})
     }
 
