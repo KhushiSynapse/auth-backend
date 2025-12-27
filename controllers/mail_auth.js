@@ -293,7 +293,7 @@ catch(error){
 
 
 exports.addProduct=async(req,res)=>{
-    const {name,price,desc,category}=req.body
+    const {name,price,description,category}=req.body
     
 
     try{
@@ -312,7 +312,7 @@ exports.addProduct=async(req,res)=>{
     }
     const result=await uploadToCloudinary(req.file.buffer)
     const imageURL=result.secure_url
-        const isAdd=await Product.create({name,price:Number(price),desc,category,imageURL})
+        const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL})
         if(isAdd){
             return res.status(200).json({message:"Product added successfully"})
         }
