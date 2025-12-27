@@ -7,6 +7,9 @@ const Role=require("../Schema/Role")
 const t=require("../helper/translator")
 const otpstore={}
 const { authenticator } = require("otplib");
+const multer=require("multer")
+const cloudinary=require("cloudinary").v2
+const Product=require("../Schema/Product")
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
@@ -288,4 +291,37 @@ catch(error){
 }
 }
 
+
+exports.addProduct=async(req,res)=>{
+    const {name,price,description,category}=req.body
+    const uploadToCloudinary=(fileBuffer)=>{
+        return new Promise((resolve,reject)=>{
+    const stream= cloudinary.uploader.upload_stream({
+        folder:"product-img"},
+        (error,result)=>{
+            if(error)
+                reject (error)
+            else resolve(result)
+        }
+    )
+    stream.end(fileBuffer)
+})
+    }
+    const result=await uploadToCloudinary(req.file.buffer)
+    const imageURL=result.secure_url
+
+    try{
+        
+        const isAdd=await Product.create({name,price,description,category,imageURL})
+        if(isAdd){
+            return res.status(200).json({message:"Product added successfully"})
+        }
+        else{
+            return res.status(400).json({message:"Product not added"})
+        }
+    }
+    catch(error){
+        return res.status(400).json({message:error.message})
+    }
+}
 

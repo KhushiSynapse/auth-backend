@@ -28,5 +28,7 @@ router.post("/assign-role/:role/:id",[langController.checkLanguage,authControlle
 
 router.post("/change-password",[langController.checkLanguage,authController.authmiddleware],authController.changePass)
 
+router.post("/add-product",[authController.authmiddleware],authController.addProduct)
+
 
 module.exports=router

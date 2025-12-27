@@ -2,6 +2,8 @@ const {PORT} =require("./configure/config")
 const connectDB = require("./configure/db");
 const {AttachPermissions}=require("./Seed/AttachPermission")
 const {SendPermissions}=require("./Seed/PermissionSeed")
+const multer=require("multer")
+const cloudinary=require("cloudinary").v2
 
 async function Seed(){
 await connectDB();
@@ -11,7 +13,14 @@ await connectDB();
 }
 
 Seed()
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET
+})
 
+const storage=multer.memoryStorage()
+const upload=multer({storage})
 const express = require("express");
 const cors = require("cors");
 
@@ -25,3 +34,4 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports=upload
