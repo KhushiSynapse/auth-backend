@@ -139,7 +139,7 @@ const user = await User.findOne({ email })
     const isValid = authenticator.check(otp, user.secret,{window:1});
    
   if (isValid) {
-      const token=jwt.sign({email,},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+      const token=jwt.sign({email,userId:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
        return res.status(200).json({token})
     
     } else {
