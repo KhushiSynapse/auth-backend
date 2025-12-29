@@ -346,7 +346,6 @@ exports.saveProduct=async(req,res)=>{
     const productId=req.params.productId
     const Id=req.user.userId
     
-    const quantity=req.user.Quantity??1
     console.log(Id)
     try{
         const details=await Product.findById(productId)
@@ -393,4 +392,12 @@ exports.removeItem=async(req,res)=>{
         return res.status(500).json(error.message)
     }
 }
-
+ exports.getProductData=async(req,res)=>{
+try{
+    const productId=req.params.id
+    const details=await Product.findOne({_id:productId})
+    return res.status(200).json(details)
+}catch(error){
+    return res.status(500).json({message:error.message})
+}
+ }

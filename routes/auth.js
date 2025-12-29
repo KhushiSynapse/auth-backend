@@ -39,5 +39,6 @@ router.get("/list-items",authController.authmiddleware,authController.getCartPro
 
 router.delete("/remove-item/:id",[authController.authmiddleware,],authController.removeItem)
 
+router.get("/get-ProductData/:id",authController.getProductData)
 
 module.exports=router
