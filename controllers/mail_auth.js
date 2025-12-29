@@ -345,10 +345,12 @@ exports.getProducts=async(req,res)=>{
 exports.saveProduct=async(req,res)=>{
     const productId=req.params.productId
     const Id=req.user.userId
+    
+    const quantity=req.user.Quantity??1
     console.log(Id)
     try{
         const details=await Product.findById(productId)
-        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,userId:Id})
+        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,userId:Id,Quantity:quantity})
         if(item){
             return res.status(200).json({message:"Product added to cart"})
         }
