@@ -31,7 +31,7 @@ router.post("/change-password",[langController.checkLanguage,authController.auth
 
 router.post("/add-product",[authController.authmiddleware,permissionController.PermissionCheck("add-product"),upload.single("image")],authController.addProduct)
 
-router.get("/list-products",authController.getProducts)
+router.get("/list-products",authController.authmiddleware,authController.getProducts)
 
 
 module.exports=router
