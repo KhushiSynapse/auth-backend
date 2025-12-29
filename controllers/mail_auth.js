@@ -10,6 +10,7 @@ const { authenticator } = require("otplib");
 const multer=require("multer")
 const cloudinary=require("cloudinary").v2
 const Product=require("../Schema/Product")
+const Item=require("../Schema/Item")
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
@@ -336,6 +337,23 @@ exports.getProducts=async(req,res)=>{
     }
     catch(error){
         return res.status(400).json({message:error.message})
+    }
+}
+
+
+exports.saveProduct=async(req,res)=>{
+    const productId=req.params.productId
+    try{
+        const details=await Product.findOne({productId})
+        const item=await Item.create(details)
+        if(item){
+            return res.status(200).json({message:"Product added to cart"})
+        }
+        else{
+            return res.status(400).json({message:"Issue in adding Product"})
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
     }
 }
 
