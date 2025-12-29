@@ -350,7 +350,7 @@ exports.saveProduct=async(req,res)=>{
     console.log(Id)
     try{
         const details=await Product.findById(productId)
-        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,userId:Id,Quantity:quantity})
+        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,userId:Id})
         if(item){
             return res.status(200).json({message:"Product added to cart"})
         }
