@@ -5,7 +5,7 @@ exports.getUserRole=async(req,res)=>{
         const email=req.user.email
         const user=await User.findOne({email}).populate({path:"role",select:"name"})
           if(user){
-            const token=jwt.sign({email,rolename:user.role.name},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
+            const token=jwt.sign({email,rolename:user.role.name,userId:user._id},process.env.JWT_SECRET_KEY,{expiresIn:"1h"})
             return res.status(200).json({token})
           }
           else{

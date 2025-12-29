@@ -165,7 +165,8 @@ exports.authmiddleware= (req,res,next)=>{
             }
             const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
             req.user={email:decoder.email,
-                roleID:decoder.roleId
+                roleID:decoder.roleId,
+                userId:decoder.userId
             }
             next()
         }
@@ -343,9 +344,10 @@ exports.getProducts=async(req,res)=>{
 
 exports.saveProduct=async(req,res)=>{
     const productId=req.params.productId
+    const Id=req.user.userId
     try{
         const details=await Product.findById(productId)
-        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,})
+        const item=await Item.create({name:details.name,price:details.price,imageURL:details.imageURL,userId:Id})
         if(item){
             return res.status(200).json({message:"Product added to cart"})
         }
@@ -355,5 +357,21 @@ exports.saveProduct=async(req,res)=>{
     }catch(error){
         return res.status(500).json({message:error.message})
     }
+}
+
+
+exports.getCartProducts=async(req,res)=>{
+   const Id=req.user.userId
+   try{
+   const items=await Item.find({Id})
+   if(!items){
+    return res.status(400).json({message:"No items added in cart"})
+   }
+   else{
+    return res.status(200).json(items)
+   }}
+   catch(error){
+    return res.status(500).json({message:error.messsage})
+   }
 }
 

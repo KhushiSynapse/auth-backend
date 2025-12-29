@@ -35,5 +35,7 @@ router.get("/list-products",authController.authmiddleware,authController.getProd
 
 router.post("/save-product/:productId",[authController.authmiddleware],authController.saveProduct)
 
+router.get("/list-items",authController.authmiddleware,authController.getCartProducts)
+
 
 module.exports=router
