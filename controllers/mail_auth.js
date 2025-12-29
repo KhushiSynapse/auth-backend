@@ -344,8 +344,8 @@ exports.getProducts=async(req,res)=>{
 exports.saveProduct=async(req,res)=>{
     const productId=req.params.productId
     try{
-        const details=await Product.findOne({productId})
-        const item=await Item.create(details)
+        const details=await Product.findById(productId)
+        const item=await Item.create({name:details.name,price:details.price,category:details.category,imageURL:details.imageURL,})
         if(item){
             return res.status(200).json({message:"Product added to cart"})
         }
