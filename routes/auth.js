@@ -37,5 +37,7 @@ router.post("/save-product/:productId",[authController.authmiddleware],authContr
 
 router.get("/list-items",authController.authmiddleware,authController.getCartProducts)
 
+router.delete("/remove-item/:id",[authController.authmiddleware,],authController.removeItem)
+
 
 module.exports=router

@@ -378,3 +378,19 @@ exports.getCartProducts=async(req,res)=>{
    }
 }
 
+exports.removeItem=async(req,res)=>{
+    try{
+        const itemId=req.params.id
+        const data=await Item.findByIdAndDelete(itemId)
+        if(data){
+            return res.status(200).json({message:"Item deleted"})
+        }
+        else{
+            return res.status(400).json({message:"Erroe in removing data"})
+        }
+    }
+    catch(error){
+        return res.status(500).json(error.message)
+    }
+}
+
