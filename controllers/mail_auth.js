@@ -296,12 +296,11 @@ catch(error){
 
 exports.addProduct=async(req,res)=>{
     const {name,price,description,category}=req.body
-   const image=req.file
-    if(!image){
-        return res.status(400).json({message:"No image added"})
-    }
+   const images=req.files
+   
 
     try{
+        
         const uploadToCloudinary=(fileBuffer)=>{
         return new Promise((resolve,reject)=>{
     const stream= cloudinary.uploader.upload_stream({
@@ -315,10 +314,13 @@ exports.addProduct=async(req,res)=>{
     stream.end(fileBuffer)
 })
     }
-     
-    const result=await uploadToCloudinary(req.file.buffer)
-    const imageURL=result.secure_url
-        const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL})
+     const uploadImages=[]
+        for (const file of images ){
+             const result=await uploadToCloudinary(file.buffer)
+             uploadImages.push(result.secure_url)
+        }
+    
+        const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL:uploadImages})
         if(isAdd){
             return res.status(200).json({message:"Product added successfully"})
         }
