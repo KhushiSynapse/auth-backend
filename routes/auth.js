@@ -29,7 +29,7 @@ router.post("/assign-role/:role/:id",[langController.checkLanguage,authControlle
 
 router.post("/change-password",[langController.checkLanguage,authController.authmiddleware],authController.changePass)
 
-router.post("/add-product",[authController.authmiddleware,permissionController.PermissionCheck("add-product"),upload.single("image")],authController.addProduct)
+router.post("/add-product",[authController.authmiddleware,permissionController.PermissionCheck("add-product"),upload.array("image",2)],authController.addProduct)
 
 router.get("/list-products",authController.authmiddleware,authController.getProducts)
 
