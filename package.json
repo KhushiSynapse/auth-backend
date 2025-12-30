@@ -26,6 +26,7 @@
     "nodemailer": "^7.0.11",
     "otplib": "^12.0.1",
     "qrcode": "^1.5.4",
-    "resend": "^6.6.0"
+    "resend": "^6.6.0",
+    "stripe": "^20.1.0"
   }
 }
