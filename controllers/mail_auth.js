@@ -408,7 +408,7 @@ try{
     try{
         const newQuantity=req.body.Quantity
         const productid=req.params.id
-        const update=await Product.updateOne({_id:productid},{$set:{Quantity:newQuantity}})
+        const update=await Item.updateOne({_id:productid},{$set:{Quantity:newQuantity}})
         if(update){
             return res.status(200).json({message:"updated"})
         }
