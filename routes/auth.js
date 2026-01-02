@@ -41,4 +41,6 @@ router.delete("/remove-item/:id",[authController.authmiddleware,],authController
 
 router.get("/get-ProductData/:id",authController.getProductData)
 
+router.patch("/update-quantity/:id",[authController.authmiddleware],authController.updateQuantity)
+
 module.exports=router
