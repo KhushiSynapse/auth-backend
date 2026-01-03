@@ -13,7 +13,6 @@ const Product=require("../Schema/Product")
 const Item=require("../Schema/Item")
 const paypal = require("@paypal/paypal-server-sdk");
 
-
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
         process.env.PAYPAL_CLIENT_SECRET
