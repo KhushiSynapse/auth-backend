@@ -434,7 +434,7 @@ exports.createPayPalOrder=async(req,res)=>{
         intent:"CAPTURE",
         purchase_units:[{
             amount:{
-                "currency_code":"INR",
+                "currency_code":"USD",
                 value:amount
             }
         }]
