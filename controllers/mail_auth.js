@@ -473,3 +473,13 @@ exports.captureOrder=async(req,res)=>{
     return res.status(500).json({message:error.message})
  }
 }
+
+exports.clearCart=async(req,res)=>{
+    const id=req.user.userId
+    try{
+         await Item.deleteMany({userId:id})
+    }
+    catch(error){
+        return res.status(500)
+    }
+}
