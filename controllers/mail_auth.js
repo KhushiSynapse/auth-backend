@@ -469,6 +469,7 @@ exports.captureOrder=async(req,res)=>{
     details:response.result
  })}
  catch(error){
+    console.log(error)
     return res.status(500).json({message:error.message})
  }
 }
