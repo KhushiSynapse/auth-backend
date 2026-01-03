@@ -477,9 +477,15 @@ exports.captureOrder=async(req,res)=>{
 exports.clearCart=async(req,res)=>{
     const id=req.user.userId
     try{
-         await Item.deleteMany({userId:id})
+        const result= await Item.deleteMany({userId:id})
+        if(result){
+            return res.json({message:"successfully deleted"})
+        }
+        else{
+            return res.json({message:"successfully not deleted"})
+        }
     }
     catch(error){
-        return res.status(500)
+        return res.status(500).json({message:error.message})
     }
 }
