@@ -11,6 +11,16 @@ const multer=require("multer")
 const cloudinary=require("cloudinary").v2
 const Product=require("../Schema/Product")
 const Item=require("../Schema/Item")
+const paypal = require("@paypal/paypal-server-sdk");
+
+
+const paypalClient=new paypal.Client({
+    ClinetCredentials:{
+        clientId:process.env.PAYPAL_CLIENT_ID,
+        clientSecret:process.env.PAYPAL_CLIENT_SECRET
+    },
+     environment: paypal.Environment.Sandbox
+})
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
@@ -420,3 +430,47 @@ try{
     }
  }
 
+exports.createPayPalOrder=async(req,res)=>{
+    const {amount1}=req.body
+    const requestOredrBody={
+        intent:"CAPTURE",
+        purchase_units:[{
+            amount:{
+                "currency_code":"INR",
+                value:amount1
+            }
+        }]
+    }
+    try{
+        const request=new paypal.orders.OrdersCreateRequest()
+        request.prefer=("return=representation")
+        request.requestBody(requestOredrBody)
+
+        const response=await paypalClient.execute(request)
+
+        res.json({orderId:response.result.id})
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
+
+exports.captureOrder=async(req,res)=>{
+    const {orderId}=req.body
+ if(!orderId){
+    return res.status(400).json({message:"OrderId Missing"})
+ }
+ try{
+ const request=new paypal.orders.OrdersCaptureRequest(orderId)
+ request.requestBody({})
+
+ const response=await paypalClient.execute(request)
+
+ res.json({
+    status:response.result.status,
+    details:response.result
+ })}
+ catch(error){
+    return res.status(500).json({message:error.message})
+ }
+}

@@ -43,4 +43,8 @@ router.get("/get-ProductData/:id",authController.getProductData)
 
 router.patch("/update-quantity/:id",[authController.authmiddleware],authController.updateQuantity)
 
+router.post("/create-order",[authController.authmiddleware],authController.createPayPalOrder)
+
+router.post("/capture-order",[authController.authmiddleware],authController.captureOrder)
+
 module.exports=router
