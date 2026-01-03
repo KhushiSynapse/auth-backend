@@ -11,7 +11,7 @@ const multer=require("multer")
 const cloudinary=require("cloudinary").v2
 const Product=require("../Schema/Product")
 const Item=require("../Schema/Item")
-const paypal = require("@paypal/paypal-server-sdk");
+const paypal = require("@paypal/checkout-server-sdk");
 
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
