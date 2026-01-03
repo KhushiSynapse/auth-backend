@@ -14,13 +14,12 @@ const Item=require("../Schema/Item")
 const paypal = require("@paypal/paypal-server-sdk");
 
 
-const paypalClient=new paypal.Client({
-    ClinetCredentials:{
-        clientId:process.env.PAYPAL_CLIENT_ID,
-        clientSecret:process.env.PAYPAL_CLIENT_SECRET
-    },
-     environment: paypal.Environment.Sandbox
-})
+const paypalClient=new paypal.core.SandboxEnvironment(
+    process.env.PAYPAL_CLIENT_ID,
+        process.env.PAYPAL_CLIENT_SECRET
+    
+)
+const paypalClient = new paypal.core.PayPalHttpClient(environment);
 const generateOtp=()=>{
     return Math.floor(10000+Math.random()*900000)
 }
@@ -431,13 +430,13 @@ try{
  }
 
 exports.createPayPalOrder=async(req,res)=>{
-    const {amount1}=req.body
+    const {amount}=req.body
     const requestOredrBody={
         intent:"CAPTURE",
         purchase_units:[{
             amount:{
                 "currency_code":"INR",
-                value:amount1
+                value:amount
             }
         }]
     }
