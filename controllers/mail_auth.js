@@ -12,6 +12,7 @@ const cloudinary=require("cloudinary").v2
 const Product=require("../Schema/Product")
 const Item=require("../Schema/Item")
 const paypal = require("@paypal/checkout-server-sdk");
+const Order=require("../Schema/Order")
 
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
@@ -486,6 +487,21 @@ exports.clearCart=async(req,res)=>{
         }
     }
     catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
+exports.createOrder=async(req,res)=>{
+    try{
+        const{amount,currency,paymentStatus,orderId}=req.body
+        const result=await Order.createOne({id:orderId,amount:amount,currency:currency,paymentstatus:paymentStatus})
+        if(result){
+            return res.status(200).json({message:"Oredr Created"})
+        }
+        else{
+            return res.status(400).json({message:"Problem in creating order"})
+        }
+    }catch(error){
         return res.status(500).json({message:error.message})
     }
 }

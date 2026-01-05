@@ -49,5 +49,7 @@ router.post("/capture-order",[authController.authmiddleware],authController.capt
 
 router.delete("/clear-cart",[authController.authmiddleware,],authController.clearCart)
 
+router.post("/create-orderinDB",[authController.authmiddleware],authController.createOrder)
+
 
 module.exports=router
