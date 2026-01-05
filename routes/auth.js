@@ -55,5 +55,7 @@ router.get("/get-OrderItem/",[authController.authmiddleware],authController.getO
 
 router.post("/add-orderitems",[authController.authmiddleware],authController.createOrderItems)
 
+router.patch("/cancel-order/:id",[authController.authmiddleware],authController.cancelOrder)
+
 
 module.exports=router
