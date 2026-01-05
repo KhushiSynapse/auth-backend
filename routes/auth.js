@@ -53,6 +53,7 @@ router.post("/create-orderinDB",[authController.authmiddleware],authController.c
 
 router.get("/get-OrderItem/",[authController.authmiddleware],authController.getOrderItems)
 
+router.post("/add-orderitems",[authController.authmiddleware],authController.createOrderItems)
 
 
 module.exports=router

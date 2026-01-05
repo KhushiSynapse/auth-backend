@@ -481,6 +481,7 @@ exports.clearCart=async(req,res)=>{
     try{
         const result= await Item.deleteMany({userId:id})
         if(result){
+           
             return res.json({message:"successfully deleted"})
         }
         else{
@@ -508,9 +509,27 @@ exports.createOrder=async(req,res)=>{
     }
 }
 
+exports.createOrderItems=async(req,res)=>{
+    const{orderId,list}=req.body
+    try{
+       const orderItems = list.map(item => ({
+      orderid: orderId,
+      name: item.name,
+      price: Number(item.price),
+      quantity: Number(item.Quantity),
+      total: Number(item.price) * Number(item.Quantity),
+    }));
+     await OrderItem.insertMany(orderItems)
+     return res.status(200).json({message:"Added"})
+    }catch(error){
+        returnres.status(500).json({message:error.message})
+    }
+}
+
 exports.getOrderItems=async(req,res)=>{
     try{
         const data=await OrderItem.find().populate({path:"orderid",select:"_id paymentstatus orderstatus"})
+        console.log(data)
         if(data.length>0){
             return res.status(200).json(data)
         }
