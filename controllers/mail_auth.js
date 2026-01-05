@@ -499,7 +499,7 @@ exports.createOrder=async(req,res)=>{
         const{amount,currency,paymentStatus}=req.body
         const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId})
         if(result){
-            return res.status(200).json({message:"Oredr Created",result})
+            return res.status(200).json({message:"Oredr Created",orderId: result._id})
         }
         else{
             return res.status(400).json({message:"Problem in creating order"})
