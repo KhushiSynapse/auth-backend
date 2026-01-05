@@ -510,11 +510,11 @@ exports.createOrder=async(req,res)=>{
 }
 
 exports.createOrderItems=async(req,res)=>{
-    const{orderId,list}=req.body
+    const{id,list}=req.body
     const userId=req.user.userId
     try{
        const orderItems = list.map(item => ({
-      orderid: orderId,
+      orderid: id,
       userId,
       name: item.name,
       price: Number(item.price),
