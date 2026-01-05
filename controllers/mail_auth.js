@@ -551,7 +551,7 @@ exports.cancelOrder=async(req,res)=>{
         if(status.orderstatus==="processing"){
             const count=await Order.findByIdAndUpdate(id,{$set:{orderstatus:"cancelled"}})
             if(count){
-                return res.staus(200).json({message:"Order Cancelled"})
+                return res.status(200).json({message:"Order Cancelled"})
             }
         }
         else{
