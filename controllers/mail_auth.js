@@ -511,6 +511,7 @@ exports.createOrder=async(req,res)=>{
 
 exports.createOrderItems=async(req,res)=>{
     const{id,list}=req.body
+    console.log(id)
     const userId=req.user.userId
     try{
        const orderItems = list.map(item => ({
