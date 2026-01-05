@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 
 const OrderItemSchema=new mongoose.Schema({
-    orderid:{type:mongoose.Schema.Types.ObjectId,required:true},
+    orderid:{type:mongoose.Schema.Types.ObjectId,ref:"Order",required:true},
     name:{type:"String",required:true},
         price:{type:"Number",required:true},
         addedAt:{type:"Date",default:Date.now},
