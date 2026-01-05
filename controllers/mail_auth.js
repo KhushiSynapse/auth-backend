@@ -520,7 +520,7 @@ exports.createOrderItems=async(req,res)=>{
       userId,
       name: item.name,
       price: Number(item.price),
-      quantity: Number(item.Quantity),
+      Quantity: Number(item.Quantity),
       total: Number(item.price) * Number(item.Quantity),
     }));
      await OrderItem.insertMany(orderItems)
