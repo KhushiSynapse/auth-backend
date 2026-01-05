@@ -13,6 +13,7 @@ const Product=require("../Schema/Product")
 const Item=require("../Schema/Item")
 const paypal = require("@paypal/checkout-server-sdk");
 const Order=require("../Schema/Order")
+const OrderItem = require("../Schema/OrderItem")
 
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
@@ -504,5 +505,18 @@ exports.createOrder=async(req,res)=>{
         }
     }catch(error){
         return res.status(500).json({message:error.message})
+    }
+}
+
+exports.getOrderItems=async(req,res)=>{
+    try{
+        const data=await OrderItem.find().populate({path:"orderid",select:"_id paymentstatus orderstatus"})
+        if(data.length>0){
+            return res.status(200).json(data)
+        }
+        else{
+            res.status(400).json({message:"error"})}
+    }catch(error){
+        res.status(500).json({message:error.message})
     }
 }

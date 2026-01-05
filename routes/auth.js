@@ -51,5 +51,8 @@ router.delete("/clear-cart",[authController.authmiddleware,],authController.clea
 
 router.post("/create-orderinDB",[authController.authmiddleware],authController.createOrder)
 
+router.get("/get-OrderItem/",[authController.authmiddleware],authController.getOrderItems)
+
+
 
 module.exports=router
