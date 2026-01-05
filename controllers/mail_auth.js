@@ -516,7 +516,7 @@ exports.createOrderItems=async(req,res)=>{
     const userId=req.user.userId
     try{
        const orderItems = list.map(item => ({
-      orderid: mongoose.Types.ObjectId(id),
+      orderid:new mongoose.Types.ObjectId(id),
       userId,
       name: item.name,
       price: Number(item.price),
