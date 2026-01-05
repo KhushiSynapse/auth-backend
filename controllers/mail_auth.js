@@ -511,9 +511,11 @@ exports.createOrder=async(req,res)=>{
 
 exports.createOrderItems=async(req,res)=>{
     const{orderId,list}=req.body
+    const userId=req.user.userId
     try{
        const orderItems = list.map(item => ({
       orderid: orderId,
+      userId,
       name: item.name,
       price: Number(item.price),
       quantity: Number(item.Quantity),
@@ -522,7 +524,7 @@ exports.createOrderItems=async(req,res)=>{
      await OrderItem.insertMany(orderItems)
      return res.status(200).json({message:"Added"})
     }catch(error){
-        returnres.status(500).json({message:error.message})
+        return res.status(500).json({message:error.message})
     }
 }
 
