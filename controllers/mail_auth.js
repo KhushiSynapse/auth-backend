@@ -496,10 +496,10 @@ exports.clearCart=async(req,res)=>{
 exports.createOrder=async(req,res)=>{
     const userId=req.user.userId
     try{
-        const{amount,currency,paymentStatus,orderId}=req.body
-        const result=await Order.create({_id:orderId,amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId})
+        const{amount,currency,paymentStatus}=req.body
+        const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId})
         if(result){
-            return res.status(200).json({message:"Oredr Created"})
+            return res.status(200).json({message:"Oredr Created",result})
         }
         else{
             return res.status(400).json({message:"Problem in creating order"})

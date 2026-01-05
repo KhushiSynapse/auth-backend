@@ -1,9 +1,6 @@
 const mongoose=require("mongoose")
 
 const OrderSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId, // ObjectId type
-        default: () => new mongoose.Types.ObjectId()},
     userid:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
     amount:{type:"String",required:true},
     paymentstatus:{type:"String",required:true},
