@@ -531,8 +531,9 @@ exports.createOrderItems=async(req,res)=>{
 }
 
 exports.getOrderItems=async(req,res)=>{
+    const id=req.user.userId
     try{
-        const data=await OrderItem.find().populate({path:"orderid",select:"_id paymentstatus orderstatus"})
+        const data=await OrderItem.find({userid:id}).populate({path:"orderid",select:"_id paymentstatus orderstatus"})
         console.log(data)
         if(data.length>0){
             return res.status(200).json(data)
