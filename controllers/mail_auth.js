@@ -534,7 +534,7 @@ exports.getOrderItems=async(req,res)=>{
     const id=req.user.userId
     try{
        
-        const items=await OrderItem.find({userid:id}).populate("orderid", "amount orderstatus paymentstatus")  
+        const items=await OrderItem.find({userId:id}).populate("orderid", "amount orderstatus paymentstatus")  
         console.log(items)
         if(items.length>0){
             return res.status(200).json(items)
