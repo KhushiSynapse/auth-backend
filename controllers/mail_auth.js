@@ -167,7 +167,7 @@ exports.authmiddleware= (req,res,next)=>{
     try{
         const authHeader=req.headers.authorization
         if(!authHeader){
-            return res.status(400).json({message:t("NOtoken",req.lang)})
+            return res.status(401).json({message:t("NOtoken",req.lang)})
         }
        else{
             const token=authHeader.split(" ")[1]
@@ -182,7 +182,7 @@ exports.authmiddleware= (req,res,next)=>{
             next()
         }
     }catch(error){
-        return res.status(400).json({message:t("Invalid Token",req.lang)})
+        return res.status(500).json({message:t("Invalid Token",req.lang)})
     }
 }
 
