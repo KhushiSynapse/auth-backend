@@ -628,3 +628,37 @@ exports.requestOrder=async(req,res)=>{
        return res.status(500).json({message:error.message})
     }
 }
+
+exports.updateRefund=async(req,res)=>{
+    const id=req.params.id
+    try{
+        const result=await Order.findOne({_id:id}).select("orderstatus paymentstatus")
+        if(result.orderstatus==="cancelled" && result.paymentstatus!=="refunded"){
+        const update=await Order.updateOne({_id:id},{$set:{refund:true}})
+        if(update.modifiedCount>0){
+            return res.status(200).json({message:"updated"})
+        }
+        else{
+             return res.status(400).json({message:"not updated"})
+        }}
+        else{
+            return res.status(400).json({message:"Order status is not cancelled or payment is refunded"})
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
+exports.getRefundList=async(req,res)=>{
+    try{
+        const result=await Order.find({refund:true})
+        if(result.length>0){
+            return res.status(200).json(result)
+        }
+        else{
+            return res.status(400).json({message:"No refund request"})
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}

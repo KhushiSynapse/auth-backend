@@ -63,5 +63,9 @@ router.patch("/update-status/:id/:value",authController.updateOrderStatus)
 
 router.post("/get-refund/:id",authController.requestOrder)
 
+router.patch("/update-refund/:id",authController.updateRefund)
+
+router.get("/get-RefundList/",[authController.authmiddleware],authController.getRefundList)
+
 
 module.exports=router
