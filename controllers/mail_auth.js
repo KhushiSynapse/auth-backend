@@ -587,7 +587,7 @@ exports.updateOrderStatus=async(req,res)=>{
     const id=req.params.id
     const value=req.params.value
     try{
-        const result=await Order.updateOne({_id:id},{$set:{orderstatus:value}})
+        const result=await Order.updateOne({_id:id},{$set:{orderstatus:value,paymentstatus:"refunded"}})
         if(result.modifiedCount>0){
             return res.status(200).json({message:"Status Updated"})
         }
