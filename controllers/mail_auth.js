@@ -533,13 +533,15 @@ exports.createOrderItems=async(req,res)=>{
 exports.getOrderItems=async(req,res)=>{
     const id=req.user.userId
     try{
-        const data=await OrderItem.find({userid:id}).populate({path:"orderid",select:"_id paymentstatus orderstatus"})
-        console.log(data)
-        if(data.length>0){
-            return res.status(200).json(data)
+       
+        const items=await OrderItem.find({userid:id}).populate("orderid", "amount orderstatus paymentstatus")  
+        console.log(items)
+        if(items.length>0){
+            return res.status(200).json(items)
         }
         else{
             res.status(400).json({message:"No items ordered"})}
+           
     }catch(error){
         res.status(500).json({message:error.message})
     }
