@@ -539,7 +539,7 @@ exports.getOrderItems=async(req,res)=>{
             return res.status(200).json(data)
         }
         else{
-            res.status(400).json({message:"error"})}
+            res.status(400).json({message:"No items ordered"})}
     }catch(error){
         res.status(500).json({message:error.message})
     }
