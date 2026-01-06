@@ -6,6 +6,7 @@ const OrderSchema = new mongoose.Schema({
     paymentstatus:{type:"String",required:true},
     orderstatus:{type:"String",required:true,default:"processing"},
     currency:{type:"String"},
+    captureid:{type:"String",required:true},
     createdat:{type:Date,default:Date.now}
 
 })

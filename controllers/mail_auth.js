@@ -497,8 +497,8 @@ exports.clearCart=async(req,res)=>{
 exports.createOrder=async(req,res)=>{
     const userId=req.user.userId
     try{
-        const{amount,currency,paymentStatus}=req.body
-        const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId})
+        const{amount,currency,paymentStatus,captureId}=req.body
+        const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId,captureid:captureId})
         if(result){
             return res.status(200).json({message:"Oredr Created",orderId: result._id})
         }
@@ -582,17 +582,49 @@ exports.getAllOrderedItems=async(req,res)=>{
     }
 }
 
-
 exports.updateOrderStatus=async(req,res)=>{
     const id=req.params.id
     const value=req.params.value
     try{
-        const result=await Order.updateOne({_id:id},{$set:{orderstatus:value,paymentstatus:"refunded"}})
+        const result=await Order.updateOne({_id:id},{$set:{orderstatus:value}})
         if(result.modifiedCount>0){
             return res.status(200).json({message:"Status Updated"})
         }
         else{return res.status(400).json({message:"Error in status change"})}
     }catch(error){
         return res.status(500).json({message:error.message})
+    }
+}
+
+exports.requestOrder=async(req,res)=>{
+    const id =req.params.id
+    
+    try{
+       const result=await Order.findOne({_id:id}).select("captureid amount currency paymentstatus")
+    const request=new paypal.payments.CapturesRefundRequest(result.captureid)
+    if (request.paymentstatus === "refunded") {
+            return res.status(400).json({ message: "Order already refunded" });
+        }
+
+    request.requestBody({
+        amount:{
+            value:result.amount,
+            currency_code:result.currency
+        }
+    })
+     const response=await paypalClient.execute(request)
+     if(response.result.status === "COMPLETED"){
+        const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded"}})
+        if(update.modifiedCount>0){
+        return res.status(200).json({message:"Payment Refund successful"})
+        }
+     }
+     else{
+        return res.status(400).json({message:"Payment refund Unsuccessful"})
+
+     }
+
+     }catch(error){
+       return res.status(500).json({message:error.message})
     }
 }
