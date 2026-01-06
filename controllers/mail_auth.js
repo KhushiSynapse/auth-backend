@@ -567,3 +567,32 @@ exports.cancelOrder=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+exports.getAllOrderedItems=async(req,res)=>{
+    try{
+        const result=await OrderItem.find()
+        if(result.length===0){
+            return res.status(400).json({message:"NO items yet or error in getting items"})
+        }
+        else{
+            return res.status(200).json(result)
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
+
+exports.updateOrderStatus=async(req,res)=>{
+    const id=req.params.id
+    const value=req.params.value
+    try{
+        const result=await Order.updateOne({_id:id},{$set:{orderstatus:value}})
+        if(result.modifiedCount>0){
+            return res.status(200).json({message:"Status Updated"})
+        }
+        else{return res.status(400).json({message:"Error in status change"})}
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
