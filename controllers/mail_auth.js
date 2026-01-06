@@ -559,7 +559,7 @@ exports.cancelOrder=async(req,res)=>{
             }
         }
         else if(status.orderstatus==="cancelled"){
-            return res.status(400).json({message:"Order is already cancelled"})
+            return res.status(400).json({message:"Order is already cancelled."})
         }else{
             return res.status(400).json({message:"Cannot cancel the order"})
         }
