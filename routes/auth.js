@@ -55,7 +55,7 @@ router.get("/get-OrderItem/",[authController.authmiddleware],authController.getO
 
 router.post("/add-orderitems",[authController.authmiddleware],authController.createOrderItems)
 
-router.patch("/cancel-order/:id",authController.cancelOrder)
+router.patch("/cancel-order/:id",[authController.authmiddleware],authController.cancelOrder)
 
 router.get("/getAll-OrderItem/",[authController.authmiddleware],authController.getAllOrderedItems)
 
@@ -63,7 +63,7 @@ router.patch("/update-status/:id/:value",authController.updateOrderStatus)
 
 router.post("/get-refund/:id",authController.requestOrder)
 
-router.patch("/update-refund/:id",authController.updateRefund)
+router.patch("/update-refund/:id",[authController.authmiddleware],authController.updateRefund)
 
 router.get("/get-RefundList",[authController.authmiddleware],authController.getRefundList)
 
