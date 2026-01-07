@@ -625,7 +625,7 @@ exports.requestOrder=async(req,res)=>{
     try{
        const result=await Order.findOne({_id:id}).select("captureid amount currency paymentstatus")
     const request=new paypal.payments.CapturesRefundRequest(result.captureid)
-    if (request.paymentstatus === "refunded") {
+    if (result.paymentstatus === "refunded") {
             return res.status(400).json({ message: "Order already refunded" });
         }
 
