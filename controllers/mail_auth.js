@@ -632,11 +632,14 @@ exports.requestOrder=async(req,res)=>{
 exports.updateRefund=async(req,res)=>{
     const id=req.params.id
     try{
-        const result=await Order.findOne({_id:id}).select("orderstatus paymentstatus")
+        const result=await Order.findOne({_id:id}).select("orderstatus paymentstatus refund")
         if(result.orderstatus==="cancelled" && result.paymentstatus!=="refunded"){
         const update=await Order.updateOne({_id:id},{$set:{refund:true}})
         if(update.modifiedCount>0){
             return res.status(200).json({message:"updated"})
+        }
+        else if(result.refund===true){
+            return res.status(402).json({message:"Request already sent"})
         }
         else{
              return res.status(400).json({message:"not updated"})
