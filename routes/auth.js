@@ -67,5 +67,7 @@ router.patch("/update-refund/:id",authController.updateRefund)
 
 router.get("/get-RefundList",[authController.authmiddleware],authController.getRefundList)
 
+router.post("/create-transaction",authController.createTransaction)
+
 
 module.exports=router
