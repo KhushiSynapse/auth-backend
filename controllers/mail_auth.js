@@ -614,7 +614,7 @@ exports.requestOrder=async(req,res)=>{
     })
      const response=await paypalClient.execute(request)
      if(response.result.status === "COMPLETED"){
-        const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded"}})
+        const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded",refund:false}})
         if(update.modifiedCount>0){
         return res.status(200).json({message:"Payment Refund successful"})
         }
