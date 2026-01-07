@@ -481,9 +481,9 @@ exports.captureOrder=async(req,res)=>{
 
 exports.createTransaction=async(req,res)=>{
     const uId=req.user.userId
-    const {amount,currency,paymentStatus,captureId,paymentPaidAt, paypalorderId,paymentMethod,orderId}=req.body
+    const {amount,currency,paymentStatus,captureId,paymentPaidAt, paypalorderId,paymentMethod,id}=req.body
     try{
-        const result=await Transaction.create({userId:uId,paymentMethod:paymentMethod,amount,currency:currency,paypalOrderId:paypalorderId,paypalCaptureId:captureId,paymentpaidAt:paymentPaidAt,paymentStatus,orderId})
+        const result=await Transaction.create({userId:uId,paymentMethod:paymentMethod,amount,currency:currency,paypalOrderId:paypalorderId,paypalCaptureId:captureId,paymentpaidAt:paymentPaidAt,paymentStatus,orderId:id})
              if(result){
                 return res.status(200).json({message:"created"})
              }
