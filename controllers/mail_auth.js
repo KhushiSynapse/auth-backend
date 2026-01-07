@@ -15,6 +15,8 @@ const paypal = require("@paypal/checkout-server-sdk");
 const Order=require("../Schema/Order")
 const OrderItem = require("../Schema/OrderItem")
 const mongoose=require("mongoose")
+const Transaction=require("../Schema/Transaction")
+
 
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
@@ -477,6 +479,23 @@ exports.captureOrder=async(req,res)=>{
  }
 }
 
+exports.createTransaction=async(req,res)=>{
+    const uId=req.user.userId
+    const {amount,currency,paymentStatus,captureId,paymentPaidAt, orderId,paymentMethod,oid}=req.body
+    try{
+        const result=await Transaction.create({userId:uId,paymentMethod:paymentMethod,amount,currency:currency,paypalOrderId:orderId,paypalCaptureId:captureId,paymentpaidAt:paymentPaidAt,paymentStatus,orderId:oid})
+             if(result){
+                return res.status(200).json({message:"created"})
+             }
+             else{
+                return res.status(400).json({message:"not created"})
+             }
+    
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
 exports.clearCart=async(req,res)=>{
     const id=req.user.userId
     try{
@@ -548,6 +567,7 @@ exports.getOrderItems=async(req,res)=>{
 }
 
 exports.cancelOrder=async(req,res)=>{
+    const uid=req.user.userId
     const id=req.params.id
     try{
         const status=await Order.findOne({_id:id}).select("orderstatus")
@@ -555,7 +575,9 @@ exports.cancelOrder=async(req,res)=>{
         if(status.orderstatus==="processing"){
             const count=await Order.updateOne({_id:id},{$set:{orderstatus:"cancelled"}})
             if(count.modifiedCount>0){
+                await Transaction.updateOne({userId:uid,orderId:id},{$set:{paymentCancelledAt:new Date()}})
                 return res.status(200).json({message:"Order Cancelled"})
+                
             }
         }
         else if(status.orderstatus==="cancelled"){
@@ -597,6 +619,7 @@ exports.updateOrderStatus=async(req,res)=>{
 }
 
 exports.requestOrder=async(req,res)=>{
+    uid=req.user.userId
     const id =req.params.id
     
     try{
@@ -616,6 +639,7 @@ exports.requestOrder=async(req,res)=>{
      if(response.result.status === "COMPLETED"){
         const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded",refund:false}})
         if(update.modifiedCount>0){
+            await Transaction.updateOne({userId:uid,orderId:id},{$set:{paymentRefundedAt:new Date()}})
         return res.status(200).json({message:"Payment Refund successful"})
         }
      }
@@ -636,6 +660,7 @@ exports.updateRefund=async(req,res)=>{
         if(result.orderstatus==="cancelled" && result.paymentstatus!=="refunded"){
         const update=await Order.updateOne({_id:id},{$set:{refund:true}})
         if(update.modifiedCount>0){
+             await Transaction.updateOne({userId:uid,orderId:id},{$set:{refundRequestedAt:new Date()}})
             return res.status(200).json({message:"updated"})
         }
         else if(result.refund===true){
