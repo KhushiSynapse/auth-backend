@@ -481,9 +481,9 @@ exports.captureOrder=async(req,res)=>{
 
 exports.createTransaction=async(req,res)=>{
     const uId=req.user.userId
-    const {amount,currency,paymentStatus,captureId,paymentPaidAt, paypalorderId,paymentMethod,id}=req.body
+    const {amount,currency,paymentStatus,captureId,paymentPaidAt, paypalorderId,paymentMethod,orderid}=req.body
     try{
-        const result=await Transaction.create({userId:uId,paymentMethod:paymentMethod,amount,currency:currency,paypalOrderId:paypalorderId,paypalCaptureId:captureId,paymentpaidAt:paymentPaidAt,paymentStatus,orderId:id})
+        const result=await Transaction.create({userId:uId,paymentMethod:paymentMethod,amount,currency:currency,paypalOrderId:paypalorderId,paypalCaptureId:captureId,paymentpaidAt:paymentPaidAt,paymentStatus,orderId:orderid})
              if(result){
                 return res.status(200).json({message:"created"})
              }
@@ -519,7 +519,7 @@ exports.createOrder=async(req,res)=>{
         const{amount,currency,paymentStatus,captureId}=req.body
         const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId,captureid:captureId})
         if(result){
-            return res.status(200).json({result})
+            return res.status(200).json(result)
         }
         else{
             return res.status(400).json({message:"Problem in creating order"})
