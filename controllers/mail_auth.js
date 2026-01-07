@@ -639,6 +639,7 @@ exports.requestOrder=async(req,res)=>{
      if(response.result.status === "COMPLETED"){
         const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded",refund:false}})
         if(update.modifiedCount>0){
+            console.log(uid,id)
            const result= await Transaction.updateOne({userId:uid,orderId:id},{$set:{paymentRefundedAt:new Date()}})
            if(result.modifiedCount>0){
         return res.status(200).json({message:"Payment Refund successful"})}
