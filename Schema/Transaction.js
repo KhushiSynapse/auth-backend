@@ -1,7 +1,7 @@
 const mongoose =require("mongoose")
 
 const TransactionSchema=new mongoose.Schema({
-    userId:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
+    userId:{type:mongoose.Schema.Types.ObjectId,ref:"User",required:true},
     orderId:{type:mongoose.Schema.Types.ObjectId,ref:"Order",required:true},
     paymentMethod:{type:String,default:"PayPal"},
     amount:{type:String,required:true},
