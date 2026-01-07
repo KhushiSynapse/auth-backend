@@ -61,7 +61,7 @@ router.get("/getAll-OrderItem/",[authController.authmiddleware],authController.g
 
 router.patch("/update-status/:id/:value",authController.updateOrderStatus)
 
-router.post("/get-refund/:id",[authController.authmiddleware],authController.requestOrder)
+router.post("/get-refund/:id/:uid",[authController.authmiddleware],authController.requestOrder)
 
 router.patch("/update-refund/:id",[authController.authmiddleware],authController.updateRefund)
 

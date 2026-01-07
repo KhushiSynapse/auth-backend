@@ -619,7 +619,7 @@ exports.updateOrderStatus=async(req,res)=>{
 }
 
 exports.requestOrder=async(req,res)=>{
-    const uid=req.user.userId
+    const uid=req.params.id
     const id =req.params.id
     
     try{
