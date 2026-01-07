@@ -654,6 +654,7 @@ exports.requestOrder=async(req,res)=>{
 }
 
 exports.updateRefund=async(req,res)=>{
+    const uid=req.user.userId
     const id=req.params.id
     try{
         const result=await Order.findOne({_id:id}).select("orderstatus paymentstatus refund")
