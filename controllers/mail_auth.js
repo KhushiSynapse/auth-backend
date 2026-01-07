@@ -691,3 +691,19 @@ exports.getRefundList=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+
+exports.getTransactionList=async(req,res)=>{
+    const userid=req.user.userId
+try{
+    const list=await Transaction.find({userId:userid})
+    if(list.length>0){
+        return res.status(200).json(list)
+    }
+    else{
+        return res.status(400).json({message:"no transaction"})
+    }
+}catch(error){
+    return res.status(500).json({message:error.message})
+}
+}

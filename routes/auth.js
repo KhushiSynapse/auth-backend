@@ -69,5 +69,7 @@ router.get("/get-RefundList",[authController.authmiddleware],authController.getR
 
 router.post("/create-transaction",[authController.authmiddleware],authController.createTransaction)
 
+router.get("/get-transaction",[authController.authmiddleware],authController.getTransactionList)
+
 
 module.exports=router
