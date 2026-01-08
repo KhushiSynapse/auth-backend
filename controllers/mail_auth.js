@@ -725,6 +725,18 @@ exports.getOrderId=async(req,res)=>{
     }
 }
 
+exports.getOrederDetails=async(req,res)=>{
+    try{
+        const id=req.params.id
+        const order=await Order.findOne({_id:id})
+        if(order){
+            return res.status(200).json(order)
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
+
 exports.getUserProfile=async(req,res)=>{
     try{
         const uid=req.params.uid
