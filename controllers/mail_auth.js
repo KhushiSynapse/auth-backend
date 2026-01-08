@@ -739,7 +739,7 @@ exports.getOrederDetails=async(req,res)=>{
 
 exports.getUserProfile=async(req,res)=>{
     try{
-        const uid=req.params.uid
+        const uid=req.params.id
         const data=await User.findOne({_id:uid})
         if(data){
             return res.status(200).json(data)
@@ -752,8 +752,8 @@ exports.getUserProfile=async(req,res)=>{
 
 exports.getItemDetails=async(req,res)=>{
     try{
-        const orderid=req.params.uid
-        const items=await OrderItem.find(orderid)
+        const orderId=req.params.id
+        const items=await OrderItem.find({orderid:orderId})
         if(items.length>0){
             return res.status(200).json(items)
         }
@@ -764,7 +764,7 @@ exports.getItemDetails=async(req,res)=>{
 
 exports.getTransactionDetails=async(req,res)=>{
     try{
-        const orderid=req.params.uid
+        const orderid=req.params.id
         const details=await Transaction.findOne({orderId:orderid})
         if(details){
             return res.status(200).json(details)

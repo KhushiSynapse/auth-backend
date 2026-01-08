@@ -73,9 +73,9 @@ router.get("/get-transaction",[authController.authmiddleware],authController.get
 
 router.get("/get-userprofile/:id",[authController.authmiddleware],authController.getUserProfile)
 
-router.get("/get-transactiondetails/uid",[authController.authmiddleware],authController.getTransactionDetails)
+router.get("/get-transactiondetails/id",[authController.authmiddleware],authController.getTransactionDetails)
 
-router.get("/get-productdetails/:uid",[authController.authmiddleware],authController.getItemDetails)
+router.get("/get-productdetails/:id",[authController.authmiddleware],authController.getItemDetails)
 
 router.get("/get-Orderid",[authController.authmiddleware],authController.getOrderId)
 
