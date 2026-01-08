@@ -71,5 +71,11 @@ router.post("/create-transaction",[authController.authmiddleware],authController
 
 router.get("/get-transaction",[authController.authmiddleware],authController.getTransactionList)
 
+router.get("/get-userprofile/:id",[authController.authmiddleware],authController.getUserProfile)
+
+router.get("/get-transactiondetails/uid",[authController.authmiddleware],authController.getTransactionDetails)
+
+router.get("/get-productdetails/:uid",[authController.authmiddleware],authController.getItemDetails)
+
 
 module.exports=router
