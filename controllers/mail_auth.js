@@ -777,8 +777,8 @@ exports.getTransactionDetails=async(req,res)=>{
 
 exports.getSearchItem=async(req,res)=>{
     try{
-        const serach=req.params.serach
-        const response=await OrderItem.find({name:serach})
+        const search=req.params.search
+        const response=await OrderItem.find({name:search})
         if(response.length>0){
             return res.status(200).json(response)
         }
