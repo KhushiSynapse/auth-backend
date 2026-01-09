@@ -310,7 +310,7 @@ catch(error){
 exports.addProduct=async(req,res)=>{
     const {name,price,description,category}=req.body
    const images=req.files
-   
+   const io=req.app.get("io")
 
     try{
         
