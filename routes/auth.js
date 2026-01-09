@@ -81,7 +81,7 @@ router.get("/get-Orderid",[authController.authmiddleware],authController.getOrde
 
 router.get("/get-orderdetails/:id",[authController.authmiddleware],authController.getOrederDetails)
 
-router.get("/get-searchOrder/:search",[authController.authmiddleware],authController.getOrederDetails)
+router.get("/get-searchOrder/:search",[authController.authmiddleware],authController.getSearchItem)
 
 
 module.exports=router
