@@ -333,8 +333,9 @@ exports.addProduct=async(req,res)=>{
              uploadImages.push(result.secure_url)
         }
     
-        const isAdd=await Product.create({name,price:Number(price),desc:description,category,imageURL:uploadImages})
-        if(isAdd){
+        const result=await Product.create({name,price:Number(price),desc:description,category,imageURL:uploadImages})
+        if(result){
+            io.emit("product:added",result)
             return res.status(200).json({message:"Product added successfully"})
         }
         else{
