@@ -191,7 +191,7 @@ exports.authmiddleware= (req,res,next)=>{
 exports.getUserData=async(req,res)=>{
     const email=req.user.email;
     try{
-        const data=await User.findOne({email})
+        const data=await User.findOne({email}).populate({path:"role",select:"name"})
             if (!data) return res.status(404).json({ message:t("Usernotfound",req.lang) });
 
         return res.status(200).json(data)
