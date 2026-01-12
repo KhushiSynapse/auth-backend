@@ -789,3 +789,18 @@ exports.getSearchItem=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+exports.getOrder=async(req,res)=>{
+    const id=req.user.userId
+    try{
+        const order=await Order.find({userid:id})
+        if(order.length>0){
+            return res.status(200).json(order)
+        }
+        else{
+            return res.status(400).json({message:"No orders yet"})
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
