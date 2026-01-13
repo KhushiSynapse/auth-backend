@@ -778,7 +778,10 @@ exports.getTransactionDetails=async(req,res)=>{
 exports.getSearchItem=async(req,res)=>{
     try{
         const search=req.params.search
-        const response=await OrderItem.find({name:{ $regex:search, $options: "i" }}).populate({path:"orderid",select:" _id orderstatus paymentstatus"})
+        const response=await OrderItem.find({$or:[
+            {orderstatus:{ $regex:search, $options: "i" }},
+            {paymentstatus:{$regex:search,$options:"i"}}
+        ]}).populate({path:"orderid",select:" _id orderstatus paymentstatus amount"})
         if(response.length>0){
             return res.status(200).json(response)
         }
