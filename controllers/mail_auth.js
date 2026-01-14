@@ -809,7 +809,7 @@ exports.getSearchItem=async(req,res)=>{
         }
         const totalDoc=await Order.countDocuments(finalQuery)
         const result=await Order.find(finalQuery).select(" _id orderstatus paymentstatus amount").limit(limit).skip(skipno)
-        if(response.length>0){
+        if(result.length>0){
             return res.status(200).json({result,totalPage:totalDoc/limit})
         }
         else{
