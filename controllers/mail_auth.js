@@ -796,6 +796,11 @@ exports.getSearchItem=async(req,res)=>{
                end.setHours(23,59,59,999)
                query.createdat.$lte=end
             }
+             if (startDate && !endDate) {
+    const end = new Date(startDate);
+    end.setHours(23, 59, 59, 999);
+    query.createdAt.$lte = end;
+  }
         }
         const finalQuery={
             userid:id,
