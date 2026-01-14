@@ -348,9 +348,18 @@ exports.addProduct=async(req,res)=>{
 }
 
 exports.getProducts=async(req,res)=>{
+    const limit=req.params.limit
+    const pageNo=req.params.pageNo
+    const skipNo=(pageNo-1)*limit
     try{
-        const data=await Product.find()
-        return res.status(201).json(data)
+        const result=await Product.find().limit(limit).skip(skipNo)
+        const totalDoc=await Product.countDocuments()
+        if(result.length>0){
+        return res.status(201).json({result,totalPage:Math.ceil(totalDoc/limit)})
+        }
+        else{
+            return res.status(404).json({message:"No Products Available"})
+        }
     }
     catch(error){
         return res.status(400).json({message:error.message})
