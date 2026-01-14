@@ -807,9 +807,10 @@ exports.getSearchItem=async(req,res)=>{
             userid:id,
             ...query
         }
-        const response=await Order.find(finalQuery).select(" _id orderstatus paymentstatus amount").limit(limit).skip(skipno)
+        const totalDoc=await Order.countDocuments(finalQuery)
+        const result=await Order.find(finalQuery).select(" _id orderstatus paymentstatus amount").limit(limit).skip(skipno)
         if(response.length>0){
-            return res.status(200).json(response)
+            return res.status(200).json({result,totalPage:totalDoc/limit})
         }
         else{
             return res.status(400).json({message:"No item found"})
