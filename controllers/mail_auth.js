@@ -650,7 +650,7 @@ exports.requestOrder=async(req,res)=>{
         const update=await Order.updateOne({_id:id},{$set:{paymentstatus:"refunded",refund:false}})
         if(update.modifiedCount>0){
             console.log(uid,id)
-           const result= await Transaction.updateOne({userId:new mongoose.Types.ObjectId(uid),orderId:new mongoose.Types.ObjectId(id)},{$set:{paymentRefundedAt:new Date(),paymentstatus:"REFUNDED"}})
+           const result= await Transaction.updateOne({userId:new mongoose.Types.ObjectId(uid),orderId:new mongoose.Types.ObjectId(id)},{$set:{paymentRefundedAt:new Date(),paymentStatus:"REFUNDED"}})
            if(result.modifiedCount>0){
         return res.status(200).json({message:"Payment Refund successful"})}
         }
