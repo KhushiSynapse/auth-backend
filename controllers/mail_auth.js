@@ -778,7 +778,8 @@ exports.getTransactionDetails=async(req,res)=>{
 exports.getSearchItem=async(req,res)=>{
     const id=req.user.userId
     try{
-        const {search,startDate,endDate}=req.query
+        const {search,startDate,endDate,pageno,limit}=req.query
+        const skipno=(pageno-1)*limit
     let query={}
         if(search){
            query.$or=[
@@ -806,7 +807,7 @@ exports.getSearchItem=async(req,res)=>{
             userid:id,
             ...query
         }
-        const response=await Order.find(finalQuery).select(" _id orderstatus paymentstatus amount")
+        const response=await Order.find(finalQuery).select(" _id orderstatus paymentstatus amount").limit(limit).skip(skipno)
         if(response.length>0){
             return res.status(200).json(response)
         }
