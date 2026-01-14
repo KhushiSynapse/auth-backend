@@ -820,13 +820,18 @@ exports.getSearchItem=async(req,res)=>{
 
 exports.getOrder=async(req,res)=>{
     const id=req.user.userId
+    const limitno=parseInt(req.params.limit)
+    const pageno=parseInt(req.params.pageno)
+    const skipno=(pageno-1)*limitno
     try{
-        const order=await Order.find({userid:id})
+        const totalDoc=await Order.countDocuments({userid:id})
+        const order=await Order.find({userid:id}).limit(limitno).skip(skipno)
+       
         if(order.length>0){
-            return res.status(200).json(order)
+            return res.status(200).json({order,totalPages:Math.ceil(totalDoc/limitno)})
         }
         else{
-            return res.status(400).json({message:"No orders yet"})
+            return res.status(404).json({message:"No orders yet"})
         }
     }catch(error){
         return res.status(500).json({message:error.message})

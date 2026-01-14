@@ -83,6 +83,6 @@ router.get("/get-orderdetails/:id",[authController.authmiddleware],authControlle
 
 router.get("/get-searchOrder",[authController.authmiddleware],authController.getSearchItem)
 
-router.get("/get-Order",[authController.authmiddleware],authController.getOrder)
+router.get("/get-Order/:limit/:pageno",[authController.authmiddleware],authController.getOrder)
 
 module.exports=router
