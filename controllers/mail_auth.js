@@ -852,3 +852,45 @@ exports.getOrder=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+exports.getSearchTransaction=async(req,res)=>{
+  const id=req.user.userId
+    try{
+        const {search,paidDate,endDate,pageno,limit}=req.query
+        const skipno=(pageno-1)*limit
+    let query={}
+        if(search){
+           query={paymentstatus:{$regex:search,$options:"i"}}
+        }
+        if(paidDate){
+            query.paymentPaidAt={}
+            if(startDate){
+                query.paymentPaidAt.$gte=new Date(startDate)
+            }
+            if(endDate){
+               const end=new Date(endDate)
+               end.setHours(23,59,59,999)
+               query.paymentPaidAt.$lte=end
+            }
+             if (startDate && !endDate) {
+    const end = new Date(startDate);
+    end.setHours(23, 59, 59, 999);
+    query.createdat.$lte = end;
+  }
+        }
+        const finalQuery={
+            userid:id,
+            ...query
+        }
+        const totalDoc=await Transaction.countDocuments(finalQuery)
+        const result=await Transaction.find(finalQuery).limit(limit).skip(skipno)
+        if(result.length>0){
+            return res.status(200).json({result,totalPage:Math.ceil(totalDoc/limit)})
+        }
+        else{
+            return res.status(404).json({message:"No transaction found"})
+        }
+    }catch(error){
+        return res.status(500).json({message:error.message})
+    }
+}
