@@ -69,7 +69,7 @@ router.get("/get-RefundList",[authController.authmiddleware],authController.getR
 
 router.post("/create-transaction",[authController.authmiddleware],authController.createTransaction)
 
-router.get("/get-transaction",[authController.authmiddleware],authController.getTransactionList)
+router.get("/get-transaction/:limit/:pageNo",[authController.authmiddleware],authController.getTransactionList)
 
 router.get("/get-userprofile/:id",[authController.authmiddleware],authController.getUserProfile)
 

@@ -709,7 +709,7 @@ exports.getTransactionList=async(req,res)=>{
     const userid=req.user.userId
 try{
     const limit=req.params.limit
-    const PageNo=req.params.PageNo
+    const PageNo=req.params.pageNo
     const skipNo=(PageNo-1)*limit
     const list=await Transaction.find({userId:userid}).limit(limit).skip(skipNo)
     const totalDoc=await Transaction.countDocuments({userId:userid})
