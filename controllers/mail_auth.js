@@ -857,6 +857,9 @@ exports.getSearchTransaction=async(req,res)=>{
   const id=req.user.userId
     try{
         const {search,paidDate,endDate,pageno,limit}=req.query
+        pageno=parseInt(pageno)
+        limit=parseInt(limit)
+
         const skipno=(pageno-1)*limit
     let query={}
         if(search){
