@@ -860,7 +860,7 @@ exports.getSearchTransaction=async(req,res)=>{
         const skipno=(pageno-1)*limit
     let query={}
         if(search){
-           query={paymentStatus:{$regex:search,$options:"i"}}
+           query.paymentStatus={$regex:search,$options:"i"}
         }
         if(paidDate){
             query.paymentPaidAt={}
@@ -873,7 +873,7 @@ exports.getSearchTransaction=async(req,res)=>{
                query.paymentPaidAt.$lte=end
             }
              if (paidDate && !endDate) {
-    const end = new Date(startDate);
+    const end = new Date(paidDate);
     end.setHours(23, 59, 59, 999);
     query.paymentPaidAt.$lte = end;
   }
