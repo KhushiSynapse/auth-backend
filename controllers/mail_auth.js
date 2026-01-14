@@ -796,7 +796,7 @@ exports.getSearchItem=async(req,res)=>{
                query.createdat.$lte=end
             }
         }
-        const response=await Order.find({query}).select(" _id orderstatus paymentstatus amount")
+        const response=await Order.find(query).select(" _id orderstatus paymentstatus amount")
         if(response.length>0){
             return res.status(200).json(response)
         }
