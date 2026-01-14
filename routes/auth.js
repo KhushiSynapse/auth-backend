@@ -87,5 +87,7 @@ router.get("/get-Order/:limit/:pageno",[authController.authmiddleware],authContr
 
 router.get("/get-searchTransaction",[authController.authmiddleware],authController.getSearchTransaction)
 
+router.get("/get-searchOrderIds",[authController.authmiddleware],authController.getSearchOrderId)
+
 
 module.exports=router

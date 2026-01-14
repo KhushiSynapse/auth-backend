@@ -899,3 +899,38 @@ exports.getSearchTransaction=async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 }
+
+
+exports.getSearchOrderId=async(req,res)=>{
+    try{
+        const {limit,pageNo,startDate,endDate}=req.query
+        const skipNo=(pageNo-1)*limit
+        let query={}
+       if(startDate||endDate){
+            query.createdat={}
+            if(startDate){
+                query.createdat.$gte=new Date(startDate)
+            }
+            if(endDate){
+               const end=new Date(endDate)
+               end.setHours(23,59,59,999)
+               query.createdat.$lte=end
+            }
+             if (startDate && !endDate) {
+    const end = new Date(startDate);
+    end.setHours(23, 59, 59, 999);
+    query.createdat.$lte = end;
+  }
+const result=await Order.find(query).select("_id").limit(limit).skip(skipNo)
+const totalDoc=await Order.countDocuments(query)
+
+if(result.length>0){
+    return res.status(200).json({result,totalPage:Math.ceil(totalDoc/limit)})
+}
+else{
+    return res.status(404).json({message:"No order found"})
+}
+    }
+}catch(error){
+return res.status(500).json({message:error.message})
+    }}
