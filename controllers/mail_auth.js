@@ -777,11 +777,26 @@ exports.getTransactionDetails=async(req,res)=>{
 
 exports.getSearchItem=async(req,res)=>{
     try{
-        const search=req.params.search
-        const response=await Order.find({$or:[
+        const {search,startDate,endDate}=req.query
+    let query={}
+        if(search){
+           query.$or=[
             {orderstatus:{ $regex:search, $options: "i" }},
             {paymentstatus:{$regex:search,$options:"i"}}
-        ]}).select(" _id orderstatus paymentstatus amount")
+        ]
+        }
+        if(startDate||endDate){
+            query.createdat={}
+            if(startDate){
+                query.createdat.$gte=new Date(startDate)
+            }
+            if(endDate){
+               const end=new Date(endDate)
+               end.setHours(23,59,59,999)
+               query.createdat.$lte=end
+            }
+        }
+        const response=await Order.find({query}).select(" _id orderstatus paymentstatus amount")
         if(response.length>0){
             return res.status(200).json(response)
         }
