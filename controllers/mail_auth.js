@@ -708,9 +708,13 @@ exports.getRefundList=async(req,res)=>{
 exports.getTransactionList=async(req,res)=>{
     const userid=req.user.userId
 try{
-    const list=await Transaction.find({userId:userid})
+    const limit=req.params.limit
+    const PageNo=req.params.PageNo
+    const skipNo=(PageNo-1)*limit
+    const list=await Transaction.find({userId:userid}).limit(limit).skip(skipNo)
+    const totalDoc=await Transaction.countDocuments({userId:userid})
     if(list.length>0){
-        return res.status(200).json(list)
+        return res.status(200).json({list,totalPage:Math.ceil(totalDoc/limit)})
     }
     else{
         return res.status(400).json({message:"no transaction"})
