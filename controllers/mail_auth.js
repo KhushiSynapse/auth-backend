@@ -776,6 +776,7 @@ exports.getTransactionDetails=async(req,res)=>{
 }
 
 exports.getSearchItem=async(req,res)=>{
+    const id=req.user.userId
     try{
         const {search,startDate,endDate}=req.query
     let query={}
@@ -796,7 +797,7 @@ exports.getSearchItem=async(req,res)=>{
                query.createdat.$lte=end
             }
         }
-        const response=await Order.find(query).select(" _id orderstatus paymentstatus amount")
+        const response=await Order.find({userid:id},...query).select(" _id orderstatus paymentstatus amount")
         if(response.length>0){
             return res.status(200).json(response)
         }
