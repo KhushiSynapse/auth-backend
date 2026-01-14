@@ -799,7 +799,7 @@ exports.getSearchItem=async(req,res)=>{
              if (startDate && !endDate) {
     const end = new Date(startDate);
     end.setHours(23, 59, 59, 999);
-    query.createdAt.$lte = end;
+    query.createdat.$lte = end;
   }
         }
         const finalQuery={
