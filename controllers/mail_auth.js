@@ -725,10 +725,14 @@ try{
 }
 
 exports.getOrderId=async(req,res)=>{
+    const limit=parseInt(req.params.limit)
+    const pageNo=parseInt(req.params.pageNo)
+    const skipNo=(pageNo-1)*limit
     try{
-        const list=await Order.find().select("_id").lean()
+        const totalDoc=await Order.countDocuments()
+        const list=await Order.find().select("_id").lean().limit(limit).skip(skipNo)
         if(list.length>0){
-            return res.status(200).json(list)
+            return res.status(200).json({list,totalPage:Math.ceil(totalDoc/limit)})
         }
         else{
             return res.status(400).json({message:"Error"})

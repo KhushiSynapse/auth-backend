@@ -77,7 +77,7 @@ router.get("/get-transactiondetails/:id",[authController.authmiddleware],authCon
 
 router.get("/get-productdetails/:id",[authController.authmiddleware],authController.getItemDetails)
 
-router.get("/get-Orderid",[authController.authmiddleware],authController.getOrderId)
+router.get("/get-Orderid/:limit/:pageNo",[authController.authmiddleware],authController.getOrderId)
 
 router.get("/get-orderdetails/:id",[authController.authmiddleware],authController.getOrederDetails)
 
