@@ -286,7 +286,7 @@ exports.changePass=async(req,res)=>{
         const token=authHeader.split(" ")[1]
         const decoder=jwt.verify(token,process.env.JWT_SECRET_KEY)
         const email=decoder.email
-        
+       
         const user=await User.findOne({email}).select("+password")
         const isSame= await bcrypt.compare(oldPassword,user.password)
         if(isSame){
