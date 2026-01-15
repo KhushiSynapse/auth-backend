@@ -5,8 +5,13 @@ const rateLimit =require("express-rate-limit")
 const apiLimiter=rateLimit({
     windowMs:5*60*1000,
     max:5,
-    message:{message:"Too many failed login attempts. Please try again later."},
     skipSuccessfulRequests: true,
+    handler:(req,res)=>{
+        const retrySecs=Math.ceil((req.rateLimit.resetTime-Date.now())/1000)
+        res.status(429).json({message:"Too many failed login attempts. Please try again later.",
+            retryAfter:retrySecs
+        })
+    }
 })
 
 const authController=require("../controllers/mail_auth.js")
