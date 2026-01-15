@@ -6,6 +6,7 @@ const apiLimiter=rateLimit({
     windowMs:5*60*1000,
     max:5,
     skipSuccessfulRequests: true,
+    keyGenerater:(req)=>req.body.email,
     handler:(req,res)=>{
         const retrySecs=Math.ceil((req.rateLimit.resetTime-Date.now())/1000)
         res.status(429).json({message:"Too many failed login attempts. Please try again later.",
