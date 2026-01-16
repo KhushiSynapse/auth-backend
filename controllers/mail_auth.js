@@ -925,7 +925,7 @@ const result=await Order.find(query).select("_id").limit(limit).skip(skipNo)
 const totalDoc=await Order.countDocuments(query)
 
 if(result.length>0){
-    return res.status(200).json({result,totalPage:Math.ceil(totalDoc/limit)})
+    return res.status(200).json({result,totalPage:Math.ceil(totalDoc/limit),pageNum:1})
 }
 else{
     return res.status(404).json({message:"No order found"})
