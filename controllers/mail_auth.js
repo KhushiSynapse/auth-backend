@@ -525,10 +525,12 @@ exports.clearCart=async(req,res)=>{
 
 exports.createOrder=async(req,res)=>{
     const userId=req.user.userId
+    const io=req.app.get("io")
     try{
         const{amount,currency,paymentStatus,captureId}=req.body
         const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId,captureid:captureId})
         if(result){
+            io.emit("order:generated",result)
             return res.status(200).json(result)
         }
         else{
@@ -937,9 +939,11 @@ return res.status(500).json({message:error.message})
 
 
     exports.getAllOrders=async(req,res)=>{
+       
         try{
             const orders=await Order.find()
             if(orders.length>0){
+                
                 return res.status(200).json(orders)
             }
         }catch(error){
