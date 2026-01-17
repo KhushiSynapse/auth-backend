@@ -934,3 +934,15 @@ else{
 }catch(error){
 return res.status(500).json({message:error.message})
     }}
+
+
+    exports.getAllOrders=async(req,res)=>{
+        try{
+            const orders=await Order.find()
+            if(orders.length>0){
+                return res.status(200).json(orders)
+            }
+        }catch(error){
+            return res.status(500).json({message:error.message})
+        }
+    }

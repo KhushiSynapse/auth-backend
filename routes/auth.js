@@ -103,5 +103,7 @@ router.get("/get-searchTransaction",[authController.authmiddleware],authControll
 
 router.get("/get-searchOrderIds",[authController.authmiddleware],authController.getSearchOrderId)
 
+router.get("/get-AllOrders",authController.getAllOrders)
+
 
 module.exports=router
