@@ -202,6 +202,7 @@ exports.getUserData=async(req,res)=>{
 }
 
 exports.createUser=async(req,res)=>{
+    const io=req.app.get("io")
     try{
     const {firstname,lastname,email,password}=req.body;
     if(!firstname||!lastname||!email||!password){
@@ -219,7 +220,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
  const {secret}=await Otpgen(email)
    const newuser= new User({firstname,lastname,email,password:hashedPassword,role:defaultUser._id,secret})
    await newuser.save()
-
+     io.emit("user:created",{userdata:newuser})
     return res.status(200).json({message:t("Usercreatedsuccesfully",req.lang)})
 }
 catch(error){
