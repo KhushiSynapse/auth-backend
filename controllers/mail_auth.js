@@ -581,12 +581,14 @@ exports.getOrderItems=async(req,res)=>{
 exports.cancelOrder=async(req,res)=>{
     const uid=req.user.userId
     const id=req.params.id
+    const io=req.app.get("io")
     try{
         const status=await Order.findOne({_id:id}).select("orderstatus")
         console.log(status)
         if(status.orderstatus==="processing"){
             const count=await Order.updateOne({_id:id},{$set:{orderstatus:"cancelled"}})
             if(count.modifiedCount>0){
+                io.emit("order:cancelled",{orderId:id})
                 await Transaction.updateOne({userId:uid,orderId:id},{$set:{paymentCancelledAt:new Date()}})
                 return res.status(200).json({message:"Order Cancelled"})
                 
