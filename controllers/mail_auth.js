@@ -611,7 +611,7 @@ exports.cancelOrder=async(req,res)=>{
                 await DailyAnalytics.updateOne({date:orderDate},
                 {
                     $inc:{
-                        totalOrders:-1,
+                        
                         totalProcessed:-1,
                         totalRevenue:-(status.amount),
                         totalCancelled:1,
