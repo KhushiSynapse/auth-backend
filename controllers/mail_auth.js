@@ -611,7 +611,6 @@ exports.cancelOrder=async(req,res)=>{
                 await DailyAnalytics.updateOne({date:orderDate},
                 {
                     $inc:{
-                        
                         totalProcessed:-1,
                         totalRevenue:-(status.amount),
                         totalCancelled:1,
@@ -980,6 +979,28 @@ return res.status(500).json({message:error.message})
                 
                 return res.status(200).json(orders)
             }
+        }catch(error){
+            return res.status(500).json({message:error.message})
+        }
+    }
+
+    exports.getStats=async(req,res)=>{
+        const date=new  Date()
+        const todayDate=date.toISOString().split("T")[0]
+        try{
+            const stat=await DailyAnalytics.findOne({date:todayDate}).select("totalOrders totalProcessed totalCancelled totalRevenue")
+            if(stat){
+                return res.status(200).json(stat)
+            }
+        }catch(error){
+            return res.status(500).json({message:error.message})
+        }
+    }
+
+    exports.getChartData=async(req,res)=>{
+        try{
+               const data=await DailyAnalytics.find().select("date totalProcessed totalCancelled totalRevenue totalOrders ").sort({createAt:-1}).limit(7)
+               return res.status(200).json(data)
         }catch(error){
             return res.status(500).json({message:error.message})
         }

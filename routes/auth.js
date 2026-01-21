@@ -105,5 +105,9 @@ router.get("/get-searchOrderIds",[authController.authmiddleware],authController.
 
 router.get("/get-AllOrders",authController.getAllOrders)
 
+router.get("/get-stats",authController.getStats)
+
+router.get("/get-chartData",authController.getChartData)
+
 
 module.exports=router
