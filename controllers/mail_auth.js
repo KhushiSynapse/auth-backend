@@ -229,6 +229,7 @@ catch(error){
 }    
 
 exports.listUser=async(req,res)=>{
+    
     try{
         const list= await User.find({},{firstname:1, lastname:1, role:1, email:1,_id:1}).populate({path:"role",select:"name"})
         return res.status(200).json(list)
@@ -240,9 +241,11 @@ exports.listUser=async(req,res)=>{
 
 
 exports.deleteUser=async(req,res)=>{
+    const io=req.app.get("io")
     try{
         const userId=req.params.id
         await User.findByIdAndDelete(userId)
+        io.emit("user:deleted",{userID:userId})
         return res.status(200).json({message:t("Userdeleted",req.lang)})
     }
     catch(error){
