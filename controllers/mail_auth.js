@@ -16,7 +16,7 @@ const Order=require("../Schema/Order")
 const OrderItem = require("../Schema/OrderItem")
 const mongoose=require("mongoose")
 const Transaction=require("../Schema/Transaction")
-
+const DailyAnalytics=require("../Schema/DailyAnalytics")
 
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
@@ -532,6 +532,22 @@ exports.createOrder=async(req,res)=>{
         const result=await Order.create({amount:amount,currency:currency,paymentstatus:paymentStatus,userid:userId,captureid:captureId})
         if(result){
             io.emit("order:generated",result)
+            const orderDate=result.createdat.toISOString().split("T")[0]
+            await DailyAnalytics.updateOne({date:orderDate},
+                {
+                    $inc:{
+                        totalOrders:1,
+                        totalProcessed:1,
+                        totalRevenue:result.amount
+                    },$setOnInsert:{
+                         totalCancelled:0,
+                         createdAt:new Date()
+                    },
+                    $set:{
+                          updatedAt:new Date()
+                    }
+                },{upsert:true},
+            )
             return res.status(200).json(result)
         }
         else{
@@ -584,13 +600,27 @@ exports.cancelOrder=async(req,res)=>{
     const id=req.params.id
     const io=req.app.get("io")
     try{
-        const status=await Order.findOne({_id:id}).select("orderstatus")
+        const status=await Order.findOne({_id:id}).select("orderstatus amount createdat")
         console.log(status)
         if(status.orderstatus==="processing"){
             const count=await Order.updateOne({_id:id},{$set:{orderstatus:"cancelled"}})
             if(count.modifiedCount>0){
                 io.emit("order:cancelled",{orderId:id})
                 await Transaction.updateOne({userId:uid,orderId:id},{$set:{paymentCancelledAt:new Date()}})
+                const orderDate = status.createdat.toISOString().split("T")[0];
+                await DailyAnalytics.updateOne({date:orderDate},
+                {
+                    $inc:{
+                        totalOrders:-1,
+                        totalProcessed:-1,
+                        totalRevenue:-(status.amount),
+                        totalCancelled:1
+                    },
+                    $set:{
+                          updatedAt:new Date()
+                    }
+                },
+            )
                 return res.status(200).json({message:"Order Cancelled"})
                 
             }
