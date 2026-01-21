@@ -614,7 +614,8 @@ exports.cancelOrder=async(req,res)=>{
                         totalOrders:-1,
                         totalProcessed:-1,
                         totalRevenue:-(status.amount),
-                        totalCancelled:1
+                        totalCancelled:1,
+                        cancelledPayments:1
                     },
                     $set:{
                           updatedAt:new Date()
