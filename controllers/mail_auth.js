@@ -991,7 +991,7 @@ return res.status(500).json({message:error.message})
         const date=new  Date()
         const todayDate=date.toISOString().split("T")[0]
         try{
-            const stat=await DailyAnalytics.findOne({date:todayDate}).select("totalOrders totalProcessed totalCancelled totalRevenue")
+            const stat=await DailyAnalytics.findOne({date:todayDate}).select("totalOrders totalProcessed totalCancelled totalRevenue cancelledPayments")
             if(stat){
                 return res.status(200).json(stat)
             }
