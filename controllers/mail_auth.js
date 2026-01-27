@@ -1008,3 +1008,19 @@ return res.status(500).json({message:error.message})
             return res.status(500).json({message:error.message})
         }
     }
+
+    exports.saveSubscription=async(req,res)=>{
+        try{
+            const {planname,price,features,frequency,unit}=req.body
+            const result=await Plan.createOne({name:planname,price,features,frequency,billingCycle:unit})
+            if(result){
+                return res.status(201).json({message:"Plan successfully created"})
+            }
+            else{
+                return res.status(400).json({message:"Not created"})
+            }
+
+        }catch(error){
+            return res.status(500).json({message:error.meassage})
+        }
+    }
