@@ -17,7 +17,7 @@ const OrderItem = require("../Schema/OrderItem")
 const mongoose=require("mongoose")
 const Transaction=require("../Schema/Transaction")
 const DailyAnalytics=require("../Schema/DailyAnalytics")
-
+const Plan=require("../Schema/Plan")
 const environment=new paypal.core.SandboxEnvironment(
     process.env.PAYPAL_CLIENT_ID,
         process.env.PAYPAL_CLIENT_SECRET
