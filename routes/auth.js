@@ -111,4 +111,6 @@ router.get("/get-chartData",authController.getChartData)
 
 router.post("/save-subscription",authController.saveSubscription)
 
+router.get("/get-subsPlan",authController.getSubscriptionData)
+
 module.exports=router

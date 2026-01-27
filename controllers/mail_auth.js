@@ -1024,3 +1024,18 @@ return res.status(500).json({message:error.message})
             return res.status(500).json({message:error.message})
         }
     }
+
+    exports.getSubscriptionData=async(req,res)=>{
+        try{
+            const data=await Plan.find()
+            if(data){
+                return res.status(200).json(data)
+            }
+            else{
+                return res.status(400).json({message:"error in fetching data"})
+            }
+
+        }catch(error){
+            return res.status(500).json({message:error.message})
+        }
+    }
